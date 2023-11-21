@@ -1,23 +1,26 @@
 import Image from "next/image";
 import React from "react";
-import { AiOutlineShopping } from "react-icons/ai";
 import {
   IoSettingsOutline,
   IoPersonOutline,
   IoNotificationsOutline,
   IoSearch,
+  IoCartOutline,
 } from "react-icons/io5";
 import { useStateContext } from "@/context/StateContext";
 import Cart from "./Cart";
 import { Autocomplete, TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
+import Link from "next/link";
 
 const NavBar = () => {
   const { showCart, setShowCart, totalQuantities } = useStateContext();
   const options = ["The Godfather", "Pulp Fiction"];
   return (
     <div className="navbar-container items-center">
-      <Image src="/logo.png" width={80} height={80} />
+      <Link href="/">
+        <Image src="/logo.png" width={80} height={80} />
+      </Link>
 
       <Autocomplete
         disablePortal
@@ -40,22 +43,25 @@ const NavBar = () => {
               "& .MuiOutlinedInput-root": {
                 borderRadius: "50px",
               },
+              width: "500px",
             }}
           />
         )}
       />
 
       <div className="flex flex-row gap-3 ">
-        <IoNotificationsOutline className="w-[20px] h-[20px]" />
+        <IoNotificationsOutline className="w-[30px] h-[30px]" />
         <button
           type="button"
           className="cart-icon"
           onClick={() => setShowCart((prevShowCart) => !prevShowCart)}>
-          <AiOutlineShopping />
+          <IoCartOutline className="w-[30px] h-[30px]" />
           <span className="cart-item-qty">{totalQuantities}</span>
         </button>
-        <IoSettingsOutline className="w-[20px] h-[20px]" />
-        <IoPersonOutline className="w-[20px] h-[20px]" />
+        <IoSettingsOutline className="w-[30px] h-[30px]" />
+        <Link href="/profile">
+          <IoPersonOutline className="w-[30px] h-[30px]" />
+        </Link>
       </div>
       {showCart && <Cart />}
     </div>

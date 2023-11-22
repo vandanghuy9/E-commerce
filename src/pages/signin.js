@@ -37,7 +37,7 @@ const SignIn = () => {
     });
   };
   return (
-    <div className={styles.container}>
+    <div className="flex flex-row h-[100vh]">
       <div className={`${styles.w60}`}>
         <div className={styles.form_login}>
           <h1>Sign in to Dafo</h1>

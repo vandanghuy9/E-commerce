@@ -72,7 +72,7 @@ const SignUp = () => {
     });
   };
   return (
-    <div className={styles.container}>
+    <div className="flex flex-row h-[100vh]">
       <div className={`${styles.w40} ${styles.bg_black}`}>
         <div className={styles.content_signup}>
           <h1>Welcome Back</h1>

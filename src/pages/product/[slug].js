@@ -43,14 +43,12 @@ const ProductDetail = () => {
         <div className="product-detail-desc">
           <h1>{product.name}</h1>
           <div className="reviews">
-            <div>
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiOutlineStar />
-            </div>
+            <AiFillStar />
+            <AiFillStar />
+            <AiFillStar />
+            <AiFillStar />
+            <AiFillStar />
+            <AiOutlineStar />
             <p>(20)</p>
           </div>
           <h4>Details: </h4>
@@ -60,11 +58,11 @@ const ProductDetail = () => {
             <h3>Quantity</h3>
             <p className="quantity-desc">
               <span className="minus" onClick={decreaseQuantity}>
-                <AiOutlineMinus />
+                -
               </span>
               <span className="num">{qty}</span>
               <span className="plus" onClick={increaseQuantity}>
-                <AiOutlinePlus />
+                +
               </span>
             </p>
           </div>

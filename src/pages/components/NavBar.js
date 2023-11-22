@@ -55,7 +55,7 @@ const NavBar = () => {
           type="button"
           className="cart-icon"
           onClick={() => setShowCart((prevShowCart) => !prevShowCart)}>
-          <IoCartOutline className="w-[30px] h-[30px]" />
+          <IoCartOutline  />
           <span className="cart-item-qty">{totalQuantities}</span>
         </button>
         <IoSettingsOutline className="w-[30px] h-[30px]" />

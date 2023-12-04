@@ -1,5 +1,5 @@
 import { Stack, styled } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { products, banner } from "../data/data";
 import {
   Product,
@@ -7,6 +7,7 @@ import {
   HeroBanner,
   FilterByCategory,
 } from "./components";
+import { getProductData } from "../api";
 
 const StyledStack = styled(Stack)(() => ({
   display: "flex",
@@ -37,6 +38,21 @@ const Home = () => {
       title: "Food and Drink",
     },
   ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const data = await getProductData();
+        setProducts(data.products);
+      } catch (error) {
+        console.error("Error fetching orders:", error.message);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
   return (
     <>
       <HeroBanner heroBanner={banner} />

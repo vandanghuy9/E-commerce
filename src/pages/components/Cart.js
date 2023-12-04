@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   AiOutlineMinus,
@@ -6,6 +6,7 @@ import {
   AiOutlineLeft,
   AiOutlineShopping,
 } from "react-icons/ai";
+import { getOrderData } from "../../api";
 import { TiDeleteOutline } from "react-icons/ti";
 import toast from "react-hot-toast";
 import { useStateContext } from "@/context/StateContext";
@@ -21,6 +22,21 @@ const Cart = () => {
     deteleFromCartItems,
   } = useStateContext();
   const handleCheckout = () => {};
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const data = await getOrderData();
+        setOrders(data.orders);
+      } catch (error) {
+        console.error("Error fetching orders:", error.message);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
   return (
     <div className="cart-wrapper">
       <div className="cart-container">
@@ -53,17 +69,17 @@ const Cart = () => {
           </div>
         )}
         <div className="product-container">
-          {cartItems.length > 0 &&
-            cartItems?.map((item) => (
+          {orders.length > 0 &&
+            orders?.map((item) => (
               <div className="product" key={item._id}>
-                <img
+                {/* <img
                   src={item.image[0] && item.image[0]}
                   className="cart-product-image"
                   alt={item.name}
-                />
+                /> */}
                 <div className="item-desc">
                   <div className="flex top">
-                    <h5>{item.name}</h5>
+                    <h5>{item.product}</h5>
                     <h4>$ {item.price}</h4>
                   </div>
                   <div className="flex bottom">
@@ -76,7 +92,7 @@ const Cart = () => {
                         >
                           -
                         </span>
-                        <span className="num">{item.quantity}</span>
+                        <span className="num">{item.count}</span>
                         <span
                           className="plus"
                           onClick={() => toggleCartItem(item._id, "inc")}

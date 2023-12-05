@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }) {
   const { pathname } = router;
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    router.push("/signin");
+    // router.push("/signin");
     setTimeout(() => {
       setLoading(false);
     }, 300);

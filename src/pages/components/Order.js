@@ -1,8 +1,15 @@
 import React from 'react';
 import { FiUser } from "react-icons/fi";
+import { useStateContext } from "@/context/StateContext";
 const Order = () => {
   //data
-
+  const {
+    cartItems, 
+    totalPrice,  
+    totalQuantities,
+    qty,
+    showCart,
+  } = useStateContext(); 
   return (
     <div>
 
@@ -42,8 +49,8 @@ const Order = () => {
                   <div className="text-xl pr-8">Quantity</div>
                   <div className="text-xl pr-8">Subtotal</div>
                 </div>
-                {orderItems.map(item => (
-                  <div key={item.id} className="flex justify-between items-center mt-6 pt-6">
+                {cartItems.map(item => (
+                  <div key={item._id} className="flex justify-between items-center mt-6 pt-6">
                     <div className="flex items-center">
                       <img src={item.media_link} alt="Product" className="small-image" />
                       <div className="flex flex-col ml-3">
@@ -113,7 +120,7 @@ const Order = () => {
                     </div>
                     <div className="text-lg font-medium mr-1">
                       <span className="text-gray-400">Total payment:</span>
-                      <span className="font-bold text-red-500">${totalPayment}</span>
+                      <span className="font-bold text-red-500">${totalPrice}</span>
                     </div>
                     <div className="py-5">
                       <button type="submit" className="btn">

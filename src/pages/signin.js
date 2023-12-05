@@ -1,41 +1,35 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import styles from "@/styles/signin.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
+import { SignInSchema } from "@/validations/AuthenticationSchema";
+import { useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const initialData = {
   email: "",
   password: "",
 };
+
 const SignIn = () => {
   const router = useRouter();
-  const [data, setData] = useState(initialData);
-  const [error, setError] = useState(initialData);
+  const methods = useForm({
+    resolver: yupResolver(SignInSchema),
+    defaultValues: initialData,
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({ ...prevData, [name]: value }));
-    setError((prevError) => ({ ...prevError, [name]: "" }));
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
+
+  const onSubmit = (data) => {
+    console.log(data); // Handle form submission here
+    router.push("/"); // Redirect upon successful login
   };
 
-  const handleSubmit = () => {
-    const tmpKey = Object.keys(data);
-    let validates = true;
-    tmpKey.forEach((key) => {
-      if (data[key] === "") {
-        setError((prevError) => ({
-          ...prevError,
-          [key]: `Vui lòng nhập ${key}`,
-        }));
-        validates = false;
-      }
-      if (validates) {
-        router.push("/");
-      }
-    });
-  };
   return (
     <div className="flex flex-row h-[100vh]">
       <div className={`${styles.w60}`}>
@@ -48,40 +42,44 @@ const SignIn = () => {
           <p className={`${styles.text_secondary} ${styles.mb_2}`}>
             or use your email account
           </p>
-          <div className={styles.mb_2}>
-            <input
-              className={`${styles.fullwidth} ${styles.input_style}`}
-              type="text"
-              name="email"
-              placeholder="Email"
-              defaultValue={data.email}
-              onChange={handleChange}
-            />
-            {error.email && (
-              <small className={styles.text_error}>{error.email}</small>
-            )}
-          </div>
-          <div className={styles.mb_2}>
-            <input
-              className={`${styles.fullwidth} ${styles.input_style}`}
-              type="password"
-              name="password"
-              placeholder="Password"
-              defaultValue={data.password}
-              onChange={handleChange}
-            />
-            {error.password && (
-              <small className={styles.text_error}>{error.password}</small>
-            )}
-          </div>
-          <button
-            className={`${styles.btn_style} ${styles.fullwidth} ${styles.mb_2}`}
-            onClick={handleSubmit}
-          >
-            Sign in
-          </button>
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className={styles.mb_2}>
+                <input
+                  className={`${styles.fullwidth} ${styles.input_style}`}
+                  type="text"
+                  {...register("email")} // Connect input to react-hook-form
+                  placeholder="Email"
+                />
+                {errors.email && (
+                  <small className={styles.text_error}>
+                    {errors.email.message}
+                  </small>
+                )}
+              </div>
+              <div className={styles.mb_2}>
+                <input
+                  className={`${styles.fullwidth} ${styles.input_style}`}
+                  type="password"
+                  {...register("password")} // Connect input to react-hook-form
+                  placeholder="Password"
+                />
+                {errors.password && (
+                  <small className={styles.text_error}>
+                    {errors.password.message}
+                  </small>
+                )}
+              </div>
+              <button
+                className={`${styles.btn_style} ${styles.fullwidth} ${styles.mb_2}`}
+                type="submit"
+              >
+                Sign in
+              </button>
+            </form>
+          </FormProvider>
           <div className={`${styles.text_right}`}>
-            <Link href="#">Forgot password?</Link>
+            <Link href="/forgot-password">Forgot password?</Link>
           </div>
         </div>
       </div>

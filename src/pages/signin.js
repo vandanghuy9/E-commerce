@@ -79,7 +79,7 @@ const SignIn = () => {
             </form>
           </FormProvider>
           <div className={`${styles.text_right}`}>
-            <Link href="/forgot-password">Forgot password?</Link>
+            <Link href="/forgetpw">Forgot password?</Link>
           </div>
         </div>
       </div>

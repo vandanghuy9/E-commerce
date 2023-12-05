@@ -9,8 +9,10 @@ import {
 import { TiDeleteOutline } from "react-icons/ti";
 import toast from "react-hot-toast";
 import { useStateContext } from "@/context/StateContext";
+import { useRouter } from "next/router";
 
 const Cart = () => {
+  const router = useRouter();
   const {
     setShowCart,
     showCart,
@@ -20,7 +22,10 @@ const Cart = () => {
     toggleCartItem,
     deteleFromCartItems,
   } = useStateContext();
-  const handleCheckout = () => {};
+  const handleCheckout = (e) => {
+    router.push("/order");
+    setShowCart((prevShowCart) => !prevShowCart);
+  };
   return (
     <div className="cart-wrapper">
       <div className="cart-container">

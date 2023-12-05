@@ -1,13 +1,14 @@
 import { Stack, styled } from "@mui/material";
 import React from "react";
-import { products, banner } from "../data/data";
+import { banner } from "../data/data";
 import {
   Product,
   FooterBanner,
   HeroBanner,
   FilterByCategory,
 } from "./components";
-
+import { getShowingProduct } from "@/utils/api";
+import { useStateContext } from "@/context/StateContext";
 const StyledStack = styled(Stack)(() => ({
   display: "flex",
   flexWrap: "wrap",
@@ -19,6 +20,7 @@ const StyledStack = styled(Stack)(() => ({
 }));
 
 const Home = () => {
+  const { products } = useStateContext();
   const data = [
     {
       id: 1,

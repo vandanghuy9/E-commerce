@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { products } from "../../data/data";
 import Image from "next/image";
 import {
   AiOutlineMinus,
@@ -13,10 +12,10 @@ import { useStateContext } from "@/context/StateContext";
 const ProductDetail = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const product = products.find((product) => product.slug === slug);
   const [index, setIndex] = useState(0);
-  const { qty, increaseQuantity, decreaseQuantity, addToCart } =
+  const { qty, increaseQuantity, decreaseQuantity, addToCart, products } =
     useStateContext();
+  const product = products.find((product) => product.slug === parseInt(slug));
   return (
     <div>
       <div className="product-detail-container">

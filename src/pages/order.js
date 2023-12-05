@@ -13,7 +13,7 @@ const Order = () => {
     <div>
       <div className="pt-12 pb-2">
         <div className="max-w-md mx-auto bg-gray-100 shadow-lg rounded-lg md:max-w-5xl">
-          <div className="md:flex">
+          <div className="md:flex-col">
             <div className="w-full px-5 py-2">
               <div className="p-5">
                 <div className="flex gap-2 text-red-500 ">
@@ -28,7 +28,6 @@ const Order = () => {
                 </div>
               </div>
             </div>
-
             <div className="py-2">
               <div className="max-w-md mx-auto bg-gray-100 shadow-lg rounded-lg md:max-w-5xl">
                 <div className="md:flex">

@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-
+import { getShowingProduct } from "@/utils/api";
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
+  const [products, setProducts] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0); // Tong so tien
@@ -73,6 +74,23 @@ export const StateContext = ({ children }) => {
       (prevTotalQuantities) => prevTotalQuantities - decreasedQuantities
     );
   };
+  useEffect(() => {
+    const loadProduct = async () => {
+      const data = await getShowingProduct();
+      const products = await data.products.map((product) => {
+        let newItem = {};
+        newItem._id = product.id;
+        newItem.name = product.name;
+        newItem.slug = product.id;
+        newItem.price = product.price;
+        newItem.details = product.content;
+        newItem.image = product.images.map((item) => item.link);
+        return newItem;
+      });
+      setProducts(products);
+    };
+    loadProduct();
+  }, []);
   return (
     <Context.Provider
       value={{
@@ -81,6 +99,7 @@ export const StateContext = ({ children }) => {
         totalPrice,
         totalQuantities,
         qty,
+        products,
         increaseQuantity,
         decreaseQuantity,
         toggleCartItem,

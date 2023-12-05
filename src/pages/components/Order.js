@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiUser } from "react-icons/fi";
+import Image from 'next/image';
 import { useStateContext } from "@/context/StateContext";
 const Order = () => {
   //data
@@ -10,6 +11,7 @@ const Order = () => {
     qty,
     showCart,
   } = useStateContext(); 
+  const shippingFee = totalPrice / 2; 
   return (
     <div>
 
@@ -52,7 +54,7 @@ const Order = () => {
                 {cartItems.map(item => (
                   <div key={item._id} className="flex justify-between items-center mt-6 pt-6">
                     <div className="flex items-center">
-                      <img src={item.media_link} alt="Product" className="small-image" />
+                    <Image src={item.image[0]} alt="Product" width={20} height={20} />
                       <div className="flex flex-col ml-3">
                         <span className="md:text-md font-medium">{item.name}</span>
                       </div>

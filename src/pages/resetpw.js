@@ -4,7 +4,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ForgotPasswordSchema } from "@/validations/AuthenticationSchema";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faLock } from '@fortawesome/free-solid-svg-icons'
+import { faKey } from '@fortawesome/free-solid-svg-icons'
 
 
 const ForgotPassword = () => {
@@ -26,41 +26,38 @@ return (
     <div className={styles.container}>
       <div className={styles.background}>
         <div className={styles.square}>
-        <FontAwesomeIcon icon={faLock}  style={{ fontSize: '5.5em' }} />
+        <FontAwesomeIcon icon={faKey} style={{ fontSize: '5.5em' }} />
 
-          <h1 className={styles.forgotPasswordText}>Forgot password?</h1>
+          <h1 className={styles.forgotPasswordText}>Reset password</h1>
           <p className={styles.smallText}>
-            Enter your email and we'll send you  {" "}
+            What would you like your new {" "}
             <br />
-            a link to reset your password
+            password to be
           </p>{" "}
             <br />
             <div className={styles.mb_2}>
               <input
                 className={`${styles.fullwidth} ${styles.input_style}`}
                 type="text"
-                placeholder="Email"
+                placeholder="New password"
             />
             </div>
-            
-            
-            <div className={`${styles.button_wrapper}`}>
-            <div className={`${styles.cancel_style}`}>
-               
-               <button className={`${styles.cancel_button}`} onClick={handleSubmit(onSubmit)}>
-               <Link href="/signin">Cancel</Link>               
-               </button>
-               
-               </div>
+            <div className={styles.mb_2}>
+              <input
+                className={`${styles.fullwidth} ${styles.input_style}`}
+                type="text"
+                placeholder="Confirm new password"
+            />
+            </div>
 
-            <div className={`${styles.save_style}`}>
+            <div className={`${styles.saven_style}`}>
                
                <button className={`${styles.save_button}`} onClick={handleSubmit(onSubmit)}>
-               <Link href="/sendmail">Reset</Link>               
+               <Link href="/signin">Save</Link>               
                </button>
                
             </div>
-            </div>
+            
         </div>
       </div>
     </div>

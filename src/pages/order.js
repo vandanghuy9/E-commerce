@@ -43,12 +43,12 @@ const Order = () => {
                       </div>
                       {cartItems.map((item) => (
                         <div
-                          key={item._id}
+                          key={item.id}
                           className="flex justify-between items-center mt-6 pt-6"
                         >
                           <div className="flex items-center">
                             <Image
-                              src={item.image[0]}
+                              src={item.images[0].link}
                               alt="Product"
                               width={20}
                               height={20}
@@ -122,11 +122,13 @@ const Order = () => {
                         <div className="col-span-3"></div>
                         <div>
                           <div className="text-lg font-medium mr-1">
-                            <span className="text-gray-400">Bill total:</span>
+                            <span className="text-gray-400">Bill total: </span>
                             <span className="font-bold">${totalPrice}</span>
                           </div>
                           <div className="text-lg font-medium mr-1">
-                            <span className="text-gray-400">Shipping Fee:</span>
+                            <span className="text-gray-400">
+                              Shipping Fee:{" "}
+                            </span>
                             <span className="font-bold">${shippingFee}</span>
                           </div>
                           <div className="text-lg font-medium mr-1">

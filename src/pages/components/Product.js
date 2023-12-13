@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-const Product = ({ product: { image, slug, name, price } }) => {
+const Product = ({ product: { images, id, name, price } }) => {
   return (
     <div>
-      <Link href={`/product/${slug}`}>
+      <Link href={`/product/${id}`}>
         <div className="product-card">
           <Image
-            src={image && image[0]}
+            src={images && images[0].link}
             alt={name}
             width={250}
             height={250}

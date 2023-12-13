@@ -11,22 +11,17 @@ export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     // router.push("/signin");
-    setTimeout(() => {
-      setLoading(false);
-    }, 300);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 300);
   }, []);
 
   return (
     <StateContext>
-      {!loading &&
-        (["/signin", "/signup"].includes(pathname) ? (
-          <Component {...pageProps} />
-        ) : (
-          <Layout>
-            <Toaster />
-            <Component {...pageProps} />
-          </Layout>
-        ))}
+      <Layout>
+        <Toaster />
+        <Component {...pageProps} />
+      </Layout>
     </StateContext>
   );
 }

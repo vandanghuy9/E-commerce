@@ -60,9 +60,9 @@ const Cart = () => {
         <div className="product-container">
           {cartItems.length > 0 &&
             cartItems?.map((item) => (
-              <div className="product" key={item._id}>
+              <div className="product" key={item.id}>
                 <img
-                  src={item.image[0] && item.image[0]}
+                  src={item.images[0].link && item.images[0].link}
                   className="cart-product-image"
                   alt={item.name}
                 />
@@ -77,14 +77,14 @@ const Cart = () => {
                       <p className="quantity-desc">
                         <span
                           className="minus"
-                          onClick={() => toggleCartItem(item._id, "desc")}
+                          onClick={() => toggleCartItem(item.id, "desc")}
                         >
                           -
                         </span>
                         <span className="num">{item.quantity}</span>
                         <span
                           className="plus"
-                          onClick={() => toggleCartItem(item._id, "inc")}
+                          onClick={() => toggleCartItem(item.id, "inc")}
                         >
                           +
                         </span>

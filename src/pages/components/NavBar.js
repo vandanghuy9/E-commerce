@@ -38,7 +38,7 @@ const NavBar = () => {
                   <IoSearch className="w-[20px] h-[20px]" />
                 </InputAdornment>
               ),
-            }}
+            }} 
             sx={{
               "& .MuiOutlinedInput-root": {
                 borderRadius: "50px",

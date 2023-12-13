@@ -7,8 +7,7 @@ import {
   HeroBanner,
   FilterByCategory,
 } from "./components";
-import { getShowingProduct } from "@/utils/api";
-import { useStateContext } from "@/context/StateContext";
+import { getAllProducts } from "@/utils/api";
 const StyledStack = styled(Stack)(() => ({
   display: "flex",
   flexWrap: "wrap",
@@ -19,8 +18,7 @@ const StyledStack = styled(Stack)(() => ({
   borderRadius: "100px",
 }));
 
-const Home = () => {
-  const { products } = useStateContext();
+const Home = ({ products }) => {
   const data = [
     {
       id: 1,
@@ -57,7 +55,7 @@ const Home = () => {
           gap="20px"
         >
           {products?.map((product) => (
-            <Product key={product._id} product={product}></Product>
+            <Product key={product.id} product={product}></Product>
           ))}
         </Stack>
       </StyledStack>
@@ -67,3 +65,16 @@ const Home = () => {
 };
 
 export default Home;
+
+export async function getStaticProps() {
+  try {
+    let data = await getAllProducts();
+    return {
+      props: {
+        products: data.products,
+      },
+    };
+  } catch (e) {
+    console.log(e);
+  }
+}

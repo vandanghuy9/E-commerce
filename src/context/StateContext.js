@@ -17,7 +17,7 @@ export const StateContext = ({ children }) => {
     setQty((prevqty) => (prevqty === 0 ? 0 : prevqty - 1));
   };
   const addToCart = (product, quantity) => {
-    const isProductInCart = cartItems.find((item) => item._id === product._id);
+    const isProductInCart = cartItems.find((item) => item.id === product.id);
     if (isProductInCart) {
       isProductInCart.quantity += 1;
       setTotalPrice(
@@ -42,8 +42,8 @@ export const StateContext = ({ children }) => {
     console.log(cartItems);
   };
   const toggleCartItem = (_id, value) => {
-    let foundProduct = cartItems.find((item) => item._id === _id);
-    let index = cartItems.findIndex((item) => item._id === _id);
+    let foundProduct = cartItems.find((item) => item.id === _id);
+    let index = cartItems.findIndex((item) => item.id === _id);
     // console.log(foundProduct);
 
     if (value === "inc") {
@@ -74,23 +74,6 @@ export const StateContext = ({ children }) => {
       (prevTotalQuantities) => prevTotalQuantities - decreasedQuantities
     );
   };
-  useEffect(() => {
-    const loadProduct = async () => {
-      const data = await getShowingProduct();
-      const products = await data.products.map((product) => {
-        let newItem = {};
-        newItem._id = product.id;
-        newItem.name = product.name;
-        newItem.slug = product.id;
-        newItem.price = product.price;
-        newItem.details = product.content;
-        newItem.image = product.images.map((item) => item.link);
-        return newItem;
-      });
-      setProducts(products);
-    };
-    loadProduct();
-  }, []);
   return (
     <Context.Provider
       value={{
@@ -99,7 +82,6 @@ export const StateContext = ({ children }) => {
         totalPrice,
         totalQuantities,
         qty,
-        products,
         increaseQuantity,
         decreaseQuantity,
         toggleCartItem,

@@ -27,7 +27,7 @@ const SignIn = () => {
 
   const onSubmit = (data) => {
     console.log(data); // Handle form submission here
-    router.push("/"); // Redirect upon successful login
+    // router.push("/"); // Redirect upon successful login
   };
 
   return (

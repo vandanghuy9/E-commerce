@@ -1,9 +1,44 @@
-import { Radio } from "@mui/material";
+import React, { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { IoCalendar } from "react-icons/io5";
-import { TextField } from "@mui/material";
-
+import { TextField, Button } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
+import Radio from "@mui/material/Radio";
 const Profile = () => {
+  const [selectedButton, setSelectedButton] = useState("myProfile");
+
+  const handleButtonClick = (button) => {
+    setSelectedButton(button);
+  };
+
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [orders, setOrders] = useState([
+    { id: 1, date: "2023-01-01", amount: 100, status: "Pending" },
+    { id: 2, date: "2023-01-02", amount: 150, status: "Shipped" },
+    { id: 1, date: "2023-01-01", amount: 100, status: "Pending" },
+    { id: 2, date: "2023-01-02", amount: 150, status: "Shipped" },
+    { id: 1, date: "2023-01-01", amount: 100, status: "Pending" },
+    { id: 2, date: "2023-01-02", amount: 150, status: "Shipped" },
+  
+    // Add more orders as needed
+  ]);
+
+  const handleCheckboxChange = (orderId) => {
+    setSelectedItems((prevSelectedItems) => {
+      if (prevSelectedItems.includes(orderId)) {
+        return prevSelectedItems.filter((id) => id !== orderId);
+      } else {
+        return [...prevSelectedItems, orderId];
+      }
+    });
+  };
+
+  const handleDeleteSelectedItems = () => {
+    // Handle the deletion of selected items
+    console.log("Deleting selected items:", selectedItems);
+    // You can implement the actual deletion logic here
+  };
+
   return (
     <div className="flex justify-center gap-10">
       <div className="flex flex-col p-5 justify-between">
@@ -12,18 +47,24 @@ const Profile = () => {
             <FaUserCircle className="w-[30px] h-[30px]" />
             <span className="font-bold">User001</span>
           </div>
-          <div className="px-10 text-white cursor-pointer py-3 bg-[#f02d34] rounded-3xl text-center">
+          <button
+            className={`px-10 text-${selectedButton === "myProfile" ? 'white' : 'black'} cursor-pointer py-3 rounded-3xl text-center ${selectedButton === "myProfile" ? 'bg-[#f02d34] border border-[#f02d34]' : 'bg-white border border-black'}`}
+            onClick={() => handleButtonClick("myProfile")}
+          >
             My profile
-          </div>
-          <div className="px-10 cursor-pointer py-3 border rounded-3xl text-center">
+          </button>
+          <button
+            className={`px-10 text-${selectedButton === "orderHistory" ? 'white' : 'black'} cursor-pointer py-3 border rounded-3xl text-center ${selectedButton === "orderHistory" ? 'bg-[#f02d34] border border-[#f02d34]' : 'bg-white border border-black'}`}
+            onClick={() => handleButtonClick("orderHistory")}
+          >
             Order history
-          </div>
+          </button>
         </div>
         <div className="self-end border border-gray-400 px-5 py-2 rounded bg-gray-200 cursor-pointer">
           Log out
         </div>
       </div>
-      <div className="p-10 border border-gray-400 rounded-xl gap-7 flex flex-col">
+      <div className={`p-10 border border-gray-400 rounded-xl gap-7 flex flex-col ${selectedButton === "myProfile" ? '' : 'hidden'}`} id="myProfileContent">
         <div className="font-bold">My profile</div>
         <div className="flex gap-20">
           <div className="gap-5 flex flex-col min-w-[250px]">
@@ -74,6 +115,53 @@ const Profile = () => {
         </div>
         <div className="self-end px-10 cursor-pointer py-3 bg-[#f02d34] rounded-3xl text-white">
           Save
+        </div>
+      </div>
+      <div className={`p-10 border border-gray-400 rounded-xl gap-7 flex flex-col ${selectedButton === "orderHistory" ? '' : 'hidden'}`} id="orderHistoryContent">
+        <div className="font-bold">Order history</div>
+
+        <div className="flex justify-center gap-5">
+          <Button variant="outlined">All</Button>
+          <Button variant="outlined">Today</Button>
+          <Button variant="outlined">This Week</Button>
+          <Button variant="outlined">This Month</Button>
+        </div>
+        <div className="table-container">
+          <table className="min-w-full border border-gray-300">
+            <thead>
+              <tr>
+                <th style={{ width: '50px', textAlign: 'center' }}>STT</th>
+                <th style={{ width: '50px', textAlign: 'center' }}>ID</th>
+                <th style={{ width: '120px', textAlign: 'center' }}>Date</th>
+                <th style={{ width: '120px', textAlign: 'center' }}>Amount</th>
+                <th style={{ width: '150px', textAlign: 'center' }}>Status</th>
+                <th style={{ width: '70px', textAlign: 'center' }}>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order, index) => (
+                <tr key={order.id}>
+                  <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                  <td style={{ textAlign: 'center' }}>{order.id}</td>
+                  <td style={{ textAlign: 'center' }}>{order.date}</td>
+                  <td style={{ textAlign: 'center' }}>{order.amount}</td>
+                  <td style={{ textAlign: 'center' }}>{order.status}</td>
+                  <td style={{ textAlign: 'center' }}>
+                    <Checkbox
+                      onChange={() => handleCheckboxChange(order.id)}
+                      checked={selectedItems.includes(order.id)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div
+          className="self-end px-10 cursor-pointer py-3 bg-[#f02d34] rounded-3xl text-white"
+          onClick={handleDeleteSelectedItems}
+        >
+          Delete Selected
         </div>
       </div>
     </div>

@@ -1,17 +1,15 @@
 import React from "react";
+import  { useState } from 'react';
 import { FiUser } from "react-icons/fi";
 import Image from "next/image";
 import { useStateContext } from "@/context/StateContext";
-import { useRouter } from 'next/router';
-
-const Order = () => {
+const Addaddress = () => {
   //data
-  const router = useRouter();
-
-  const handleCheckout = (e) => {
-    router.push("/addaddress");
-    
-  };
+  const [fullName, setFullName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [province, setProvince] = useState('');
+  const [district, setDistrict] = useState('');
+  const [streetAddress, setStreetAddress] = useState('');
   const { cartItems, totalPrice, totalQuantities, qty, showCart } =
     useStateContext();
   const shippingFee = totalPrice / 2;
@@ -22,20 +20,56 @@ const Order = () => {
       <div className="pt-12 pb-2">
         <div className="max-w-md mx-auto bg-gray-100 shadow-lg rounded-lg md:max-w-5xl">
           <div className="md:flex-col">
-            <div className="w-full px-5 py-2">
-              <div className="p-5">
-                <div className="flex gap-2 text-red-500 ">
-                  <FiUser className="w-6 h-6" />
-                </div>
-                <h2 className="text-xl font-medium ">Address</h2>
-                <div className="py-5 items-center ">
-                  <div className="grid grid-cols-4 text-base gap-2 relative">
-                    <span className="font-bold">Name</span>
-                    <span className="mx-4 break-all col-span-2">Address</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="address-container">
+          <div style={{ textAlign: 'center' }}>
+      <h2 style={{ fontSize: '50px', marginBottom: '20px', color:'red' }}>Delivery Address Information</h2>
+
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <input
+          type="text"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          placeholder="Full Name"
+          style={{ width: '300px', margin: '8px', padding: '10px', fontSize: '30px' }}
+        />
+        <input
+          type="tel"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          placeholder="Phone Number"
+          style={{ width: '300px', margin: '8px', padding: '10px', fontSize: '30px' }}
+        />
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <input
+          type="text"
+          value={province}
+          onChange={(e) => setProvince(e.target.value)}
+          placeholder="Province/City"
+          style={{ width: '300px', margin: '8px', padding: '10px', fontSize: '30px' }}
+        />
+        <input
+          type="text"
+          value={district}
+          onChange={(e) => setDistrict(e.target.value)}
+          placeholder="District"
+          style={{ width: '300px', margin: '8px', padding: '10px', fontSize: '30px' }}
+        />
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <input
+          type="text"
+          value={streetAddress}
+          onChange={(e) => setStreetAddress(e.target.value)}
+          placeholder="Street Address"
+          style={{ width: '620px', margin: '8px', padding: '10px', fontSize: '30px' }}
+        />
+      </div>
+
+      </div>
+    </div>
             <div className="py-2">
               <div className="max-w-md mx-auto bg-gray-100 shadow-lg rounded-lg md:max-w-5xl">
                 <div className="md:flex">
@@ -148,8 +182,7 @@ const Order = () => {
                             </span>
                           </div>
                           <div className="py-5">
-                            <button type="submit" className="btn"
-                            onClick={handleCheckout}>
+                            <button type="submit" className="btn">
                               Place Order
                             </button>
                           </div>
@@ -167,4 +200,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default Addaddress;

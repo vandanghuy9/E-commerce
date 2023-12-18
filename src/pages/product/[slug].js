@@ -1,17 +1,13 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import {
-  AiOutlineMinus,
-  AiOutlinePlus,
-  AiFillStar,
-  AiOutlineStar,
-} from "react-icons/ai";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { Product } from "../components";
 import { useStateContext } from "@/context/StateContext";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { getAllProducts, getProductById } from "@/utils/api";
+import ProductReview from "../components/ProductReview";
 const ProductDetail = ({ product, relatedProducts }) => {
   const [index, setIndex] = useState(0);
   const { qty, increaseQuantity, decreaseQuantity, addToCart } =
@@ -89,7 +85,7 @@ const ProductDetail = ({ product, relatedProducts }) => {
           </div>
         </div>
       </div>
-      <div className="border border-black border-solid px-6 py-4 ">
+      <div className="px-6 py-4 ">
         <Tabs defaultIndex={1}>
           <TabList>
             {["Description", "Information", "Reviews"].map((item, i) => (
@@ -98,12 +94,40 @@ const ProductDetail = ({ product, relatedProducts }) => {
               </Tab>
             ))}
           </TabList>
-
           <TabPanel>
-            <h2>Any content 1</h2>
+            <h2>Description</h2>
           </TabPanel>
           <TabPanel>
-            <h2>Any content 2</h2>
+            <h2>Information</h2>
+          </TabPanel>
+          <TabPanel>
+            <div>
+              <div className="product-detail-desc review-container">
+                <div className="summary">
+                  <h3 className="price inline-block">Product Ratings</h3>
+                </div>
+                <div className="product-rating-list w-full md:max-w-7xl">
+                  <div className="product-comment-list">
+                    <div className="w-full px-3 py-2 items-start">
+                      {product.reviews.length > 0 &&
+                        product.reviews.map(({ id, content, rating }) => (
+                          <ProductReview
+                            key={id}
+                            content={content}
+                            rating={rating}
+                            username={"hello"}
+                          />
+                        ))}
+                      {product.reviews.length == 0 && (
+                        <div className="border-b border-black text-xl font-medium py-5 flex justify-center mx-auto">
+                          No comment
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </TabPanel>
         </Tabs>
       </div>

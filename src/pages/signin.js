@@ -6,6 +6,9 @@ import { FaFacebookF, FaGoogle } from "react-icons/fa";
 import { SignInSchema } from "@/validations/AuthenticationSchema";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { login } from "@/utils/api";
+import { useUserContext } from "@/context/UserContext";
+import toast from "react-hot-toast";
 
 const initialData = {
   email: "",
@@ -13,7 +16,7 @@ const initialData = {
 };
 
 const SignIn = () => {
-  const router = useRouter();
+  const { user, handleLogin, isLogin } = useUserContext();
   const methods = useForm({
     resolver: yupResolver(SignInSchema),
     defaultValues: initialData,
@@ -27,7 +30,7 @@ const SignIn = () => {
 
   const onSubmit = (data) => {
     console.log(data); // Handle form submission here
-    // router.push("/"); // Redirect upon successful login
+    handleLogin(data);
   };
 
   return (

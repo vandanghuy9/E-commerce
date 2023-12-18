@@ -92,10 +92,11 @@ const ProductDetail = ({ product, relatedProducts }) => {
       <div className="border border-black border-solid px-6 py-4 ">
         <Tabs defaultIndex={1}>
           <TabList>
-            <Tab>
-              <div className="text-red-500 px-10">Hello</div>
-            </Tab>
-            <Tab>Title 2</Tab>
+            {["Description", "Information", "Reviews"].map((item, i) => (
+              <Tab key={i}>
+                <div className=" px-10 font-mono">{item}</div>
+              </Tab>
+            ))}
           </TabList>
 
           <TabPanel>

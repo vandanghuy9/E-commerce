@@ -1,8 +1,8 @@
 insert into app_supplier (name) values ('A company');
 
-insert into app_category (name) values ('headphones','shoes', 'hat','sock');
+insert into app_category (name) values ('headphones'),('shoes'), ('hat'),('sock');
 
-insert into app_product (name, content, avarage_rating, price, category_id, supplier_id) values
+insert into app_product (name, content, average_rating, price, category_id, supplier_id) values
 ("Earphones 1","New product",9,50.0,1,1),
 ("Earphones 2","New product",9,50.0,1,1),
 ("Earphones 3","New product",9,50.0,1,1),

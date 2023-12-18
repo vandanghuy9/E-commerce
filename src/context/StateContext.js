@@ -1,9 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import { getShowingProduct } from "@/utils/api";
+import { useRouter } from "next/router";
+import { useUserContext } from "./UserContext";
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
+  const { checkIsLogin } = useUserContext();
+  const router = useRouter();
   const [products, setProducts] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -17,29 +20,33 @@ export const StateContext = ({ children }) => {
     setQty((prevqty) => (prevqty === 0 ? 0 : prevqty - 1));
   };
   const addToCart = (product, quantity) => {
-    const isProductInCart = cartItems.find((item) => item.id === product.id);
-    if (isProductInCart) {
-      isProductInCart.quantity += 1;
-      setTotalPrice(
-        (prevTotalPrice) => prevTotalPrice + product.price * quantity
-      );
-      setTotalQuantities(
-        (prevTotalQuantities) => prevTotalQuantities + parseInt(quantity)
-      );
-      setCartItems((prevCartItems) => [...prevCartItems]);
+    if (checkIsLogin() === false) {
+      router.push("/signin");
     } else {
-      setTotalPrice(
-        (prevTotalPrice) => prevTotalPrice + product.price * quantity
-      );
-      setTotalQuantities(
-        (prevTotalQuantities) => prevTotalQuantities + parseInt(quantity)
-      );
-      product.quantity = quantity;
-      setCartItems((prevCartItems) => [...prevCartItems, product]);
+      const isProductInCart = cartItems.find((item) => item.id === product.id);
+      if (isProductInCart) {
+        isProductInCart.quantity += 1;
+        setTotalPrice(
+          (prevTotalPrice) => prevTotalPrice + product.price * quantity
+        );
+        setTotalQuantities(
+          (prevTotalQuantities) => prevTotalQuantities + parseInt(quantity)
+        );
+        setCartItems((prevCartItems) => [...prevCartItems]);
+      } else {
+        setTotalPrice(
+          (prevTotalPrice) => prevTotalPrice + product.price * quantity
+        );
+        setTotalQuantities(
+          (prevTotalQuantities) => prevTotalQuantities + parseInt(quantity)
+        );
+        product.quantity = quantity;
+        setCartItems((prevCartItems) => [...prevCartItems, product]);
+      }
+      toast.success(`${qty} ${product.name} added to the cart`);
+      setQty(1);
+      console.log(cartItems);
     }
-    toast.success(`${qty} ${product.name} added to the cart`);
-    setQty(1);
-    console.log(cartItems);
   };
   const toggleCartItem = (_id, value) => {
     let foundProduct = cartItems.find((item) => item.id === _id);

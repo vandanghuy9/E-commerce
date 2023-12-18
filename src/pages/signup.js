@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useUserContext } from "@/context/UserContext";
 import styles from "@/styles/signin.module.css";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
 const initialData = {
   username: "",
@@ -11,11 +12,11 @@ const initialData = {
 const SignUp = () => {
   const [data, setData] = useState(initialData);
   const [error, setError] = useState(initialData);
-
+  const validates = useRef(true);
+  const { handleSignup } = useUserContext();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prevData) => ({ ...prevData, [name]: value }));
-    setError((prevError) => ({ ...prevError, [name]: "" }));
   };
 
   const isEmailValid = (email) => {
@@ -39,37 +40,37 @@ const SignUp = () => {
     return hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const tmpKey = Object.keys(data);
-    let validates = true;
     tmpKey.forEach((key) => {
       if (data[key] === "") {
         setError((prevError) => ({
           ...prevError,
           [key]: `Vui lòng nhập ${key}`,
         }));
-        validates = false;
+        validates.current = false;
       } else {
         if (key === "email" && !isEmailValid(data.email)) {
           setError((prevError) => ({
             ...prevError,
             email: "Vui lòng nhập đúng định dạng email",
           }));
-          validates = false;
+          validates.current = false;
         }
-        if (key === "password" && !isPasswordValid(data.email)) {
+        if (key === "password" && !isPasswordValid(data.password)) {
           setError((prevError) => ({
             ...prevError,
             password:
               "Vui lòng nhập mật khẩu có ít nhất 8 ký tự, bao gồm chữ in hoa, chữ thường, chữ số và ký tự đặc biệt",
           }));
-          validates = false;
+          validates.current = false;
         }
       }
-      if (validates) {
-        console.log("abc");
-      }
     });
+    if (validates.current === true) {
+      handleSignup(data.email, data.password, data.username);
+    }
   };
   return (
     <div className="flex flex-row h-[100vh]">

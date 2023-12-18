@@ -12,9 +12,11 @@ import Cart from "./Cart";
 import { Autocomplete, TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import Link from "next/link";
-
+import { useUserContext } from "@/context/UserContext";
+import UserNavBar from "./UserNavbar";
 const NavBar = () => {
   const { showCart, setShowCart, totalQuantities } = useStateContext();
+  const { checkIsLogin } = useUserContext();
   const options = ["The Godfather", "Pulp Fiction"];
   return (
     <div className="navbar-container items-center">
@@ -38,7 +40,7 @@ const NavBar = () => {
                   <IoSearch className="w-[20px] h-[20px]" />
                 </InputAdornment>
               ),
-            }} 
+            }}
             sx={{
               "& .MuiOutlinedInput-root": {
                 borderRadius: "50px",
@@ -48,22 +50,19 @@ const NavBar = () => {
           />
         )}
       />
-
-      <div className="flex flex-row gap-3 ">
-        <IoNotificationsOutline className="w-[30px] h-[30px]" />
-        <button
-          type="button"
-          className="cart-icon"
-          onClick={() => setShowCart((prevShowCart) => !prevShowCart)}>
-          <IoCartOutline  />
-          <span className="cart-item-qty">{totalQuantities}</span>
-        </button>
-        <IoSettingsOutline className="w-[30px] h-[30px]" />
-        <Link href="/profile">
-          <IoPersonOutline className="w-[30px] h-[30px]" />
-        </Link>
-      </div>
-      {showCart && <Cart />}
+      {(checkIsLogin() && <UserNavBar />) || (
+        <div className="flex flex-row gap-2">
+          <Link href={"/signin"} className="signin">
+            Sign in
+          </Link>
+          <Link
+            href={"/signup"}
+            className="py-[10px] hover:underline hover:decoration-solid"
+          >
+            Sign up
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

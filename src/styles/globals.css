@@ -880,3 +880,18 @@ span.text-red {
     margin: auto;
   }
 }
+
+.signin {
+  border-radius: 15px;
+  padding: 10px 16px;
+  background-color: #f02d34;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 10000 !important;
+}
+
+.signin:hover{
+  transform: scale(1.1, 1.1);
+}

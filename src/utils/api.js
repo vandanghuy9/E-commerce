@@ -1,4 +1,4 @@
-let BASE_URL = process.env.BASE_URL;
+var BASE_URL = process.env.BASE_URL;
 export const getShowingProduct = async () => {
   const response = await fetch(`${BASE_URL}/product/`);
   if (!response.ok) {
@@ -24,6 +24,44 @@ export const getProductById = async (id) => {
   if (!response.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
+  }
+  const data = await response.json();
+  return data;
+};
+
+export const login = async ({ email, password }) => {
+  const response = await fetch(`http://localhost:8000/api/login/`, {
+    method: "POST",
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+  if (!response.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+  const data = await response.json();
+  return data;
+};
+
+export const signup = async (email, password) => {
+  const response = await fetch(`http://localhost:8000/api/register/`, {
+    method: "POST",
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+  if (!response.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to signup");
   }
   const data = await response.json();
   return data;

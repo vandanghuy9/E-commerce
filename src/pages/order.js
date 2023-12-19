@@ -2,7 +2,7 @@ import React from "react";
 import { FiUser } from "react-icons/fi";
 import Image from "next/image";
 import { useStateContext } from "@/context/StateContext";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 const Order = () => {
   //data
@@ -10,7 +10,6 @@ const Order = () => {
 
   const handleCheckout = (e) => {
     router.push("/addaddress");
-    
   };
   const { cartItems, totalPrice, totalQuantities, qty, showCart } =
     useStateContext();
@@ -148,8 +147,11 @@ const Order = () => {
                             </span>
                           </div>
                           <div className="py-5">
-                            <button type="submit" className="btn"
-                            onClick={handleCheckout}>
+                            <button
+                              type="button"
+                              className="btn"
+                              onClick={handleCheckout}
+                            >
                               Place Order
                             </button>
                           </div>

@@ -9,10 +9,19 @@ import "react-tabs/style/react-tabs.css";
 import { getAllProducts, getProductById } from "@/utils/api";
 import ProductReview from "../components/ProductReview";
 const ProductDetail = ({ product, relatedProducts }) => {
+  const router = useRouter();
   const [index, setIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const { qty, increaseQuantity, decreaseQuantity, addToCart } =
     useStateContext();
   // const product = products.find((product) => product.slug === parseInt(slug));
+  useEffect(() => {
+    setIsLoading(false);
+  }, [product]);
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <div className="product-detail-container">
@@ -154,5 +163,5 @@ export async function getStaticPaths() {
     params: { slug: item.id.toString() },
   }));
 
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 }

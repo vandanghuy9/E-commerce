@@ -66,3 +66,26 @@ export const signup = async (email, password) => {
   const data = await response.json();
   return data;
 };
+
+export const resetPassword = async (
+  email,
+  password,
+  confirmPassword,
+  handler
+) => {
+  fetch(`http://localhost:8000/api/reset_password/`, {
+    method: "POST",
+    body: JSON.stringify({
+      email: email,
+      new_password: password,
+      confirm_password: confirmPassword,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      handler(data);
+    });
+};

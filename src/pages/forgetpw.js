@@ -5,13 +5,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ForgotPasswordSchema } from "@/validations/AuthenticationSchema";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
-
+import { useUserContext } from "@/context/UserContext";
+import { useRouter } from "next/router";
 const ForgotPassword = () => {
+  const { getEmailFromUser } = useUserContext();
   const methods = useForm({
     resolver: yupResolver(ForgotPasswordSchema),
     defaultValues: { email: "" },
   });
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -20,11 +22,9 @@ const ForgotPassword = () => {
 
   const onSubmit = (data) => {
     console.log(data); // Handle form submission here
-    // You can add logic to send a reset password email
+    router.push("/resetpw");
+    getEmailFromUser(data.email);
   };
-
-  // ...
-
   return (
     <div className={styles.container}>
       <div className={styles.background}>
@@ -42,7 +42,7 @@ const ForgotPassword = () => {
                 className={`${styles.fullwidth} ${styles.input_style}`}
                 type="text"
                 placeholder="Email"
-                {...register('email')}
+                {...register("email")}
               />
             </div>
             <div className={`${styles.button_wrapper}`}>
@@ -56,10 +56,7 @@ const ForgotPassword = () => {
               </div>
 
               <div className={`${styles.save_style}`}>
-                <button
-                  className={`${styles.save_button}`}
-                  type="submit"
-                >
+                <button className={`${styles.save_button}`} type="submit">
                   Reset
                 </button>
               </div>

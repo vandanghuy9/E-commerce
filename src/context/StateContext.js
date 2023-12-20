@@ -90,6 +90,7 @@ export const StateContext = ({ children }) => {
     district,
     streetAddress,
   }) => {
+<<<<<<< HEAD
     // placeOrderRequest(
     //   {
     //     price: totalPrice,
@@ -115,6 +116,33 @@ export const StateContext = ({ children }) => {
     // );
     toast.success("Order successfully");
     router.push("/profile");
+=======
+    placeOrderRequest(
+      {
+        price: totalPrice,
+        ship_fee: totalPrice / 2,
+        user: sessionStorage.getItem("user"),
+        order_details: cartItems.map((item) => ({
+          product: item.id,
+          count: item.quantity,
+        })),
+        delivery_info: [
+          {
+            name: fullName,
+            phone: phoneNumber,
+            province: province,
+            district: district,
+            street: streetAddress,
+          },
+        ],
+      },
+      (res) => {
+        console.log(res);
+        toast.success("Order successfully");
+        router.push("/profile");
+      }
+    );
+>>>>>>> 21b6553 (fix all)
   };
   return (
     <Context.Provider

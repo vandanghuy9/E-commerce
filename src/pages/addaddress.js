@@ -10,103 +10,113 @@ const Addaddress = () => {
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
-  const { cartItems, totalPrice, totalQuantities, qty, showCart } =
-    useStateContext();
+  const { cartItems, totalPrice, placeOrder } = useStateContext();
   const shippingFee = totalPrice / 2;
   const paymentOptions = ["payment after shipping", "online payment"];
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(fullName, phoneNumber, province, district, streetAddress);
+    placeOrder({
+      fullName,
+      phoneNumber,
+      province,
+      district,
+      streetAddress,
+    });
+  };
   return (
     <div className="pt-12 mb-[100px]">
-      <div className="flex w-[1200px] mx-auto">
-        <div className="md:flex bg-gray-100 shadow-lg rounded-lg">
-          <div>
-            <h2
-              style={{
-                fontSize: "30px",
-              }}
-              className="text-red-500 font-medium px-[20px]"
-            >
-              Delivery Address Information
-            </h2>
+      <form onSubmit={handleSubmit}>
+        <div className="flex w-[1200px] mx-auto">
+          <div className="md:flex bg-gray-100 shadow-lg rounded-lg">
+            <div>
+              <h2
+                style={{
+                  fontSize: "30px",
+                }}
+                className="text-red-500 font-medium px-[20px]"
+              >
+                Delivery Address Information
+              </h2>
 
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <input
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder="Full Name"
-                style={{
-                  width: "300px",
-                  margin: "8px",
-                  padding: "10px",
-                  fontSize: "30px",
-                }}
-              />
-              <input
-                type="tel"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="Phone Number"
-                style={{
-                  width: "300px",
-                  margin: "8px",
-                  padding: "10px",
-                  fontSize: "30px",
-                }}
-              />
-            </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <input
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Full Name"
+                  style={{
+                    width: "300px",
+                    margin: "8px",
+                    padding: "10px",
+                    fontSize: "30px",
+                  }}
+                />
+                <input
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="Phone Number"
+                  style={{
+                    width: "300px",
+                    margin: "8px",
+                    padding: "10px",
+                    fontSize: "30px",
+                  }}
+                />
+              </div>
 
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <input
-                type="text"
-                value={province}
-                onChange={(e) => setProvince(e.target.value)}
-                placeholder="Province/City"
-                style={{
-                  width: "300px",
-                  margin: "8px",
-                  padding: "10px",
-                  fontSize: "30px",
-                }}
-              />
-              <input
-                type="text"
-                value={district}
-                onChange={(e) => setDistrict(e.target.value)}
-                placeholder="District"
-                style={{
-                  width: "300px",
-                  margin: "8px",
-                  padding: "10px",
-                  fontSize: "30px",
-                }}
-              />
-            </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <input
+                  type="text"
+                  value={province}
+                  onChange={(e) => setProvince(e.target.value)}
+                  placeholder="Province/City"
+                  style={{
+                    width: "300px",
+                    margin: "8px",
+                    padding: "10px",
+                    fontSize: "30px",
+                  }}
+                />
+                <input
+                  type="text"
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
+                  placeholder="District"
+                  style={{
+                    width: "300px",
+                    margin: "8px",
+                    padding: "10px",
+                    fontSize: "30px",
+                  }}
+                />
+              </div>
 
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <input
-                type="text"
-                value={streetAddress}
-                onChange={(e) => setStreetAddress(e.target.value)}
-                placeholder="Street Address"
-                style={{
-                  width: "620px",
-                  margin: "8px",
-                  padding: "10px",
-                  fontSize: "30px",
-                }}
-              />
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <input
+                  type="text"
+                  value={streetAddress}
+                  onChange={(e) => setStreetAddress(e.target.value)}
+                  placeholder="Street Address"
+                  style={{
+                    width: "620px",
+                    margin: "8px",
+                    padding: "10px",
+                    fontSize: "30px",
+                  }}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="mx-5 w-max">
-          <div className="mx-auto bg-gray-100 shadow-lg rounded-lg">
-            <div className="md:flex">
-              <div className="px-5 py-2">
-                <div className="text-red-500">
-                  <h2 className="text-xl font-medium mb-3">Order summary</h2>
-                </div>
-                <form action="/order" method="post">
+          <div className="mx-5 w-max">
+            <div className="mx-auto bg-gray-100 shadow-lg rounded-lg">
+              <div className="md:flex">
+                <div className="px-5 py-2">
+                  <div className="text-red-500">
+                    <h2 className="text-xl font-medium mb-3">Order summary</h2>
+                  </div>
+
                   <div className="grid grid-cols-2 font-mono">
                     <div className="text-lg font-medium mr-1">
                       <span className="text-gray-400">Bill total: </span>
@@ -149,12 +159,12 @@ const Addaddress = () => {
                       Place Order
                     </button>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

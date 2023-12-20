@@ -66,15 +66,30 @@ const Home = ({ products }) => {
 
 export default Home;
 
-export async function getStaticProps() {
+export async function getServerSideProps({ query }) {
+  const name = query.name;
   try {
-    let data = await getAllProducts();
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/product/?name=${name}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const searchData = await response.json();
+
     return {
       props: {
-        products: data.products,
+        products: searchData.products,
       },
     };
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.error("Error fetching search data:", error);
+
+    return {
+      props: {
+        searchData: null,
+        error: "Error fetching search data",
+      },
+    };
   }
 }

@@ -9,8 +9,12 @@ export const getShowingProduct = async () => {
   return data;
 };
 
-export const getAllProducts = async () => {
-  const response = await fetch(`${BASE_URL}/product/`);
+export const getAllProducts = async (searchQuery = "") => {
+  let url = `${BASE_URL}/product/`;
+  if (searchQuery) {
+    url += `?name=${encodeURIComponent(searchQuery)}`;
+  }
+  const response = await fetch(url);
   if (!response.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");

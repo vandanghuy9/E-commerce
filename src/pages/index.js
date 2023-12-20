@@ -69,9 +69,11 @@ export default Home;
 export async function getServerSideProps({ query }) {
   const name = query.name;
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/product/?name=${name}`
-    );
+    let url = "http://127.0.0.1:8000/api/product/";
+    if (name) {
+      url += `?name=${encodeURIComponent(name)}`;
+    }
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

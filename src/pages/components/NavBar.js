@@ -7,49 +7,74 @@ import {
   IoSearch,
   IoCartOutline,
 } from "react-icons/io5";
+import { useRouter } from "next/router";
 import { useStateContext } from "@/context/StateContext";
 import Cart from "./Cart";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField, Button } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import Link from "next/link";
 import { useUserContext } from "@/context/UserContext";
 import UserNavBar from "./UserNavbar";
 const NavBar = () => {
   const { showCart, setShowCart, totalQuantities } = useStateContext();
+  const router = useRouter();
+  const [searchValue, setSearchValue] = React.useState("");
   const { checkIsLogin } = useUserContext();
   const options = ["The Godfather", "Pulp Fiction"];
+
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    if (searchValue.trim() !== "") {
+      const params = new URLSearchParams();
+      params.append("name", searchValue);
+      const queryString = params.toString();
+      router.push({
+        pathname: "/",
+        search: `?${queryString}`,
+      });
+    }
+  };
+
   return (
-    <div className="navbar-container items-center">
+    <div className="items-center navbar-container">
       <Link href="/">
         <Image src="/logo.png" width={80} height={80} />
       </Link>
 
-      <Autocomplete
-        disablePortal
-        id="combo-box-demo"
-        options={options}
-        sx={{ width: 300 }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Search"
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IoSearch className="w-[20px] h-[20px]" />
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "50px",
-              },
-              width: "500px",
-            }}
-          />
-        )}
-      />
+      <form onSubmit={handleSearchSubmit}>
+        <Autocomplete
+          id="search-autocomplete"
+          freeSolo
+          options={options}
+          value={searchValue}
+          onChange={handleSearchChange}
+          sx={{ width: 400 }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search"
+              variant="outlined"
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <IoSearch
+                    onClick={handleSearchSubmit}
+                    className="cursor-pointer"
+                  />
+                ),
+                sx: {
+                  borderRadius: "32px", // Set the border radius here
+                },
+              }}
+            />
+          )}
+        />
+      </form>
+
       {(checkIsLogin() && <UserNavBar />) || (
         <div className="flex flex-row gap-2">
           <Link href={"/signin"} className="signin">

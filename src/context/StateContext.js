@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useUserContext } from "./UserContext";
+import { placeOrderRequest } from "@/utils/api";
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
@@ -81,6 +82,40 @@ export const StateContext = ({ children }) => {
       (prevTotalQuantities) => prevTotalQuantities - decreasedQuantities
     );
   };
+
+  const placeOrder = ({
+    fullName,
+    phoneNumber,
+    province,
+    district,
+    streetAddress,
+  }) => {
+    // placeOrderRequest(
+    //   {
+    //     price: totalPrice,
+    //     ship_fee: totalPrice / 2,
+    //     user: sessionStorage.getItem("user"),
+    //     order_details: cartItems.map((item) => ({
+    //       product: item.id,
+    //       count: item.quantity,
+    //     })),
+    //     delivery_infor: [
+    //       {
+    //         name: fullName,
+    //         phone: phoneNumber,
+    //         province: province,
+    //         district: district,
+    //         street: streetAddress,
+    //       },
+    //     ],
+    //   },
+    //   (res) => {
+    //     console.log(res);
+    //   }
+    // );
+    toast.success("Order successfully");
+    router.push("/profile");
+  };
   return (
     <Context.Provider
       value={{
@@ -95,6 +130,7 @@ export const StateContext = ({ children }) => {
         addToCart,
         setShowCart,
         deteleFromCartItems,
+        placeOrder,
       }}
     >
       {children}

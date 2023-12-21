@@ -8,7 +8,7 @@ const Context = createContext();
 export const StateContext = ({ children }) => {
   const { checkIsLogin } = useUserContext();
   const router = useRouter();
-  const [products, setProducts] = useState([]);
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0); // Tong so tien
@@ -47,6 +47,7 @@ export const StateContext = ({ children }) => {
       toast.success(`${qty} ${product.name} added to the cart`);
       setQty(1);
       console.log(cartItems);
+      return 1;
     }
   };
   const toggleCartItem = (_id, value) => {
@@ -71,11 +72,11 @@ export const StateContext = ({ children }) => {
     }
   };
   const deteleFromCartItems = (_id) => {
-    const deletedItems = cartItems.find((item) => item._id == _id);
+    const deletedItems = cartItems.find((item) => item.id == _id);
     const decreasedPrice = deletedItems.price * deletedItems.quantity;
     const decreasedQuantities = deletedItems.quantity;
     setCartItems((prevCartItems) =>
-      prevCartItems.filter((item) => item._id !== _id)
+      prevCartItems.filter((item) => item.id !== _id)
     );
     setTotalPrice((prevTotalPrice) => prevTotalPrice - decreasedPrice);
     setTotalQuantities(
@@ -90,33 +91,6 @@ export const StateContext = ({ children }) => {
     district,
     streetAddress,
   }) => {
-<<<<<<< HEAD
-    // placeOrderRequest(
-    //   {
-    //     price: totalPrice,
-    //     ship_fee: totalPrice / 2,
-    //     user: sessionStorage.getItem("user"),
-    //     order_details: cartItems.map((item) => ({
-    //       product: item.id,
-    //       count: item.quantity,
-    //     })),
-    //     delivery_infor: [
-    //       {
-    //         name: fullName,
-    //         phone: phoneNumber,
-    //         province: province,
-    //         district: district,
-    //         street: streetAddress,
-    //       },
-    //     ],
-    //   },
-    //   (res) => {
-    //     console.log(res);
-    //   }
-    // );
-    toast.success("Order successfully");
-    router.push("/profile");
-=======
     placeOrderRequest(
       {
         price: totalPrice,
@@ -142,7 +116,6 @@ export const StateContext = ({ children }) => {
         router.push("/profile");
       }
     );
->>>>>>> 21b6553 (fix all)
   };
   return (
     <Context.Provider
@@ -159,6 +132,7 @@ export const StateContext = ({ children }) => {
         setShowCart,
         deteleFromCartItems,
         placeOrder,
+        setPaymentMethod,
       }}
     >
       {children}

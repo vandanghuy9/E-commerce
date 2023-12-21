@@ -8,6 +8,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { getAllProducts, getProductById } from "@/utils/api";
 import ProductReview from "../components/ProductReview";
+import Loading from "../components/Loading";
 const ProductDetail = ({ product, relatedProducts }) => {
   const router = useRouter();
   const [index, setIndex] = useState(0);
@@ -18,9 +19,22 @@ const ProductDetail = ({ product, relatedProducts }) => {
   useEffect(() => {
     setIsLoading(false);
   }, [product]);
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
+  let stars = [];
+  let maxScore = 5;
+  for (let i = 1; i < product.average_rating / 2; i++) {
+    stars.push(1);
+  }
+  for (let i = product.average_rating / 2; i < maxScore; i++) {
+    stars.push(0);
+  }
+  const handleBuyNow = (product, quantity) => {
+    const success = addToCart(product, quantity);
+    if (success === 1) {
+      router.push("/order");
+    }
+  };
+  if (isLoading) {
+    return <Loading />;
   }
   return (
     <div>
@@ -48,12 +62,13 @@ const ProductDetail = ({ product, relatedProducts }) => {
         <div className="product-detail-desc">
           <h1>{product.name}</h1>
           <div className="reviews">
-            <AiFillStar />
-            <AiFillStar />
-            <AiFillStar />
-            <AiFillStar />
-            <AiFillStar />
-            <AiOutlineStar />
+            {stars.map((item, key) =>
+              item === 1 ? (
+                <AiFillStar key={key} />
+              ) : (
+                <AiOutlineStar key={key} />
+              )
+            )}
             <p>{product.average_rating}</p>
           </div>
           <h4>Details: </h4>
@@ -78,7 +93,10 @@ const ProductDetail = ({ product, relatedProducts }) => {
             >
               Add to cart
             </button>
-            <button className="buy-now" onClick={() => {}}>
+            <button
+              className="buy-now"
+              onClick={() => handleBuyNow(product, qty)}
+            >
               Buy Now
             </button>
           </div>
@@ -154,6 +172,7 @@ export async function getStaticProps({ params }) {
       product: product.product,
       relatedProducts: relatedProducts.products,
     },
+    revalidate: 60,
   };
 }
 

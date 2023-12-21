@@ -11,30 +11,19 @@ const Order = () => {
   const handleCheckout = (e) => {
     router.push("/addaddress");
   };
-  const { cartItems, totalPrice, totalQuantities, qty, showCart } =
-    useStateContext();
+  const { cartItems, totalPrice, setPaymentMethod } = useStateContext();
   const shippingFee = totalPrice / 2;
-  const paymentOptions = ["payment after shipping", "online payment"];
+  const paymentOptions = [
+    "Choose your payment method",
+    "payment after shipping",
+    "online payment",
+  ];
 
   return (
     <div>
       <div className="pt-12 pb-2">
         <div className="max-w-md mx-auto bg-gray-100 rounded-lg shadow-lg md:max-w-5xl">
           <div className="md:flex-col">
-            <div className="w-full px-5 py-2">
-              <div className="p-5">
-                <div className="flex gap-2 text-red-500 ">
-                  <FiUser className="w-6 h-6" />
-                </div>
-                <h2 className="text-xl font-medium ">Address</h2>
-                <div className="items-center py-5 ">
-                  <div className="relative grid grid-cols-4 gap-2 text-base">
-                    <span className="font-bold">Name</span>
-                    <span className="col-span-2 mx-4 break-all">Address</span>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="py-2">
               <div className="max-w-md mx-auto bg-gray-100 rounded-lg shadow-lg md:max-w-5xl">
                 <div className="md:flex">
@@ -116,7 +105,11 @@ const Order = () => {
                           </h2>
                         </div>
                         <div className="col-span-2">
-                          <select name="payment_method" id="payment_method">
+                          <select
+                            name="payment_method"
+                            id="payment_method"
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                          >
                             {paymentOptions.map((option, index) => (
                               <option key={index} value={option}>
                                 {option}

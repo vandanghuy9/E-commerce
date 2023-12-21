@@ -2,7 +2,7 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 const ProductReview = ({ rating, time, content, username }) => {
   let stars = [];
   let maxScore = 5;
-  for (let i = 0; i < rating / 2; i++) {
+  for (let i = 1; i < rating / 2; i++) {
     stars.push(1);
   }
   for (let i = rating / 2; i < maxScore; i++) {

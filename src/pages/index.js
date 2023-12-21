@@ -1,13 +1,8 @@
 import { Stack, styled } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { banner } from "../data/data";
-import {
-  Product,
-  FooterBanner,
-  HeroBanner,
-  FilterByCategory,
-} from "./components";
-import { getAllProducts } from "@/utils/api";
+import { Product, FooterBanner, HeroBanner } from "./components";
+import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 const StyledStack = styled(Stack)(() => ({
   display: "flex",
   flexWrap: "wrap",
@@ -37,6 +32,16 @@ const Home = ({ products }) => {
       title: "Food and Drink",
     },
   ];
+  const [displayProduct, setDisplayProduct] = useState(products);
+  const handleChange = (category) => {
+    if (category === "All") {
+      setDisplayProduct(products);
+    } else {
+      setDisplayProduct((prevProducts) =>
+        prevProducts.filter((item) => item.category.name === category)
+      );
+    }
+  };
   return (
     <>
       <HeroBanner heroBanner={banner} />
@@ -45,7 +50,31 @@ const Home = ({ products }) => {
         <p>Speaker</p>
       </div>
       <StyledStack>
-        <FilterByCategory data={data} />
+        <List
+          sx={{
+            width: "18%",
+            marginRight: "20px",
+            height: "100%",
+            gap: "12px",
+          }}
+        >
+          {data.map((item) => (
+            <ListItem>
+              <ListItemButton
+                sx={{ borderRadius: "100px" }}
+                key={item.id}
+                onClick={() => handleChange(item.title)}
+              >
+                <ListItemText
+                  sx={{ fontSize: "18px", fontWeight: "500" }}
+                  disableTypography
+                  primary={item.title}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+
         <Stack
           sx={{
             width: "80%",
@@ -54,7 +83,7 @@ const Home = ({ products }) => {
           flexWrap="wrap"
           gap="20px"
         >
-          {products?.map((product) => (
+          {displayProduct?.map((product) => (
             <Product key={product.id} product={product}></Product>
           ))}
         </Stack>

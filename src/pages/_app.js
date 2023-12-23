@@ -8,16 +8,6 @@ import { Layout } from "./components";
 import UserContext from "@/context/UserContext";
 import Script from "next/script";
 export default function App({ Component, pageProps }) {
-  // const router = useRouter();
-  // const { pathname } = router;
-  // const [loading, setLoading] = useState(true);
-  // useEffect(() => {
-  //   router.push("/signin");
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 300);
-  // }, []);
-
   return (
     <>
       <Script
@@ -35,8 +25,3 @@ export default function App({ Component, pageProps }) {
     </>
   );
 }
-
-// component la bat ki component nao
-// neu dang o trang chu thi la index
-// neu la product thi se la product
-// Layout nhan props = children

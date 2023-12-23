@@ -62,7 +62,7 @@ const Cart = () => {
             cartItems?.map((item) => (
               <div className="product" key={item.id}>
                 <img
-                  src={item.images[0].link && item.images[0].link}
+                  src={item.images[0]?.link && item.images[0]?.link}
                   className="cart-product-image"
                   alt={item.name}
                 />

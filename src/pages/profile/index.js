@@ -302,7 +302,6 @@ const Profile = () => {
                   <td style={{ textAlign: "center" }}>{order.price}</td>
                   <td style={{ textAlign: "center" }}>{order.ship_fee}</td>
                   <td style={{ textAlign: "center" }}>{order.price}</td>
-                  <td style={{ textAlign: "center" }}>{order.ship_fee}</td>
                   <td style={{ textAlign: "center" }}>{order.status}</td>
 
                   <td
@@ -311,6 +310,7 @@ const Profile = () => {
                       cursor: "pointer",
                       fontWeight: 700,
                     }}
+                    className="px-2"
                     onClick={() =>
                       handleButtonClick("orderHistoryDetail", order.id)
                     }

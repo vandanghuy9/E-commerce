@@ -1,6 +1,12 @@
 import React, { createContext, use, useContext, useState } from "react";
 import { toast } from "react-hot-toast";
-import { getShowingProduct, login, signup } from "@/utils/api";
+import {
+  getShowingProduct,
+  getUserById,
+  login,
+  signup,
+  updateUserById,
+} from "@/utils/api";
 import { useRouter } from "next/router";
 import { resetPassword } from "@/utils/api";
 const Context = createContext();
@@ -57,6 +63,16 @@ const UserContext = ({ children }) => {
       }
     });
   };
+  const getUserInfo = (id, handler) => {
+    getUserById(id, handler);
+  };
+  const updateUser = (data) => {
+    updateUserById(data, (res) => {
+      if (res.success) {
+        toast.success(res.success);
+      }
+    });
+  };
   return (
     <Context.Provider
       value={{
@@ -67,6 +83,8 @@ const UserContext = ({ children }) => {
         logout,
         getEmailFromUser,
         sendResetPaswordRequest,
+        getUserInfo,
+        updateUser,
       }}
     >
       {children}

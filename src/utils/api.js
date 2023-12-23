@@ -94,18 +94,55 @@ export const resetPassword = async (
     });
 };
 
+export const getOrderHistory = async (id) => {
+  const response = await fetch(`http://localhost:8000/api/order/user/${id}`);
+  if (!response.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+  const data = await response.json();
+  return data;
+};
+
 export const placeOrderRequest = (data, handler) => {
-  console.log(JSON.stringify(data));
-  handler("success");
-  // fetch(`http://localhost:8000/api/order/user/${data.user}`, {
-  //   method: "POST",
-  //   body: JSON.stringify(data),
-  //   headers: {
-  //     "Content-type": "application/json",
-  //   },
-  // })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     handler(data);
-  //   });
+  console.log(
+    JSON.stringify({
+      orders: [data],
+    })
+  );
+  fetch(`http://localhost:8000/api/order/user/${data.user}`, {
+    method: "POST",
+    body: JSON.stringify({
+      orders: [data],
+    }),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      handler(data);
+    });
+};
+
+export const getUserById = (data, handler) => {
+  fetch(`http://localhost:8000/api/user/${data}`)
+    .then((response) => response.json())
+    .then((data) => {
+      handler(data.user);
+    });
+};
+
+export const updateUserById = (data, handler) => {
+  fetch(`http://localhost:8000/api/user/${data.id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      handler(data);
+    });
 };

@@ -6,14 +6,39 @@ import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import { useUserContext } from "@/context/UserContext";
 import { useRouter } from "next/router";
+import { getOrderHistory, getProductById, getAllProducts } from "@/utils/api";
 
 const Profile = () => {
   const router = useRouter();
   const [selectedButton, setSelectedButton] = useState("myProfile");
   const { logout, checkIsLogin } = useUserContext();
   const handleButtonClick = (button) => {
+    getOrderHistory(sessionStorage.getItem("user")).then(data => {
+      console.log(data.orders);
+
+      // Print all order
+      data.orders.forEach(order => {
+        console.log(order);
+      });
+
+      const newOrders = data.orders.map(order => ({
+        id: order.id,
+        date: order.time.split("T")[0],
+        amount: 1, // Giữ nguyên giá trị 1 nếu bạn muốn hoặc cập nhật theo đơn hàng nếu có thông tin
+        status: "Pendding" // Giữ nguyên trạng thái "Shipped" nếu bạn muốn hoặc cập nhật theo đơn hàng nếu có thông tin
+      }));
+
+      // console.log("newOrders: ");
+      // console.log(newOrders);
+      setOrders(newOrders);
+    }).catch(error => {
+      console.error("Error occurred:", error);
+    });
     setSelectedButton(button);
+
   };
+
+
   const handleLogout = (e) => {
     if (checkIsLogin() === true) {
       logout();
@@ -22,12 +47,7 @@ const Profile = () => {
   };
   const [selectedItems, setSelectedItems] = useState([]);
   const [orders, setOrders] = useState([
-    { id: 1, date: "2023-01-01", amount: 100, status: "Pending" },
-    { id: 2, date: "2023-01-02", amount: 150, status: "Shipped" },
-    { id: 1, date: "2023-01-01", amount: 100, status: "Pending" },
-    { id: 2, date: "2023-01-02", amount: 150, status: "Shipped" },
-    { id: 1, date: "2023-01-01", amount: 100, status: "Pending" },
-    { id: 2, date: "2023-01-02", amount: 150, status: "Shipped" },
+ 
 
     // Add more orders as needed
   ]);
@@ -48,6 +68,8 @@ const Profile = () => {
     // You can implement the actual deletion logic here
   };
   useEffect(() => {
+    console.log(sessionStorage.getItem("user"));
+
     if (checkIsLogin() === false) {
       router.push("/signin");
     }
@@ -61,25 +83,21 @@ const Profile = () => {
             <span className="font-bold">User001</span>
           </div>
           <button
-            className={`px-10 text-${
-              selectedButton === "myProfile" ? "white" : "black"
-            } cursor-pointer py-3 rounded-3xl text-center ${
-              selectedButton === "myProfile"
+            className={`px-10 text-${selectedButton === "myProfile" ? "white" : "black"
+              } cursor-pointer py-3 rounded-3xl text-center ${selectedButton === "myProfile"
                 ? "bg-[#f02d34] border border-[#f02d34]"
                 : "bg-white border border-black"
-            }`}
+              }`}
             onClick={() => handleButtonClick("myProfile")}
           >
             My profile
           </button>
           <button
-            className={`px-10 text-${
-              selectedButton === "orderHistory" ? "white" : "black"
-            } cursor-pointer py-3 border rounded-3xl text-center ${
-              selectedButton === "orderHistory"
+            className={`px-10 text-${selectedButton === "orderHistory" ? "white" : "black"
+              } cursor-pointer py-3 border rounded-3xl text-center ${selectedButton === "orderHistory"
                 ? "bg-[#f02d34] border border-[#f02d34]"
                 : "bg-white border border-black"
-            }`}
+              }`}
             onClick={() => handleButtonClick("orderHistory")}
           >
             Order history
@@ -94,9 +112,8 @@ const Profile = () => {
         </button>
       </div>
       <div
-        className={`p-10 border border-gray-400 rounded-xl gap-7 flex flex-col ${
-          selectedButton === "myProfile" ? "" : "hidden"
-        }`}
+        className={`p-10 border border-gray-400 rounded-xl gap-7 flex flex-col ${selectedButton === "myProfile" ? "" : "hidden"
+          }`}
         id="myProfileContent"
       >
         <div className="font-bold">My profile</div>
@@ -151,10 +168,11 @@ const Profile = () => {
           Save
         </div>
       </div>
+
+      {/* OrderHistory */}
       <div
-        className={`p-10 border border-gray-400 rounded-xl gap-7 flex flex-col ${
-          selectedButton === "orderHistory" ? "" : "hidden"
-        }`}
+        className={`p-10 border border-gray-400 rounded-xl gap-7 flex flex-col ${selectedButton === "orderHistory" ? "" : "hidden"
+          }`}
         id="orderHistoryContent"
       >
         <div className="font-bold">Order history</div>
@@ -171,8 +189,8 @@ const Profile = () => {
               <tr>
                 <th style={{ width: "50px", textAlign: "center" }}>STT</th>
                 <th style={{ width: "50px", textAlign: "center" }}>ID</th>
-                <th style={{ width: "120px", textAlign: "center" }}>Date</th>
                 <th style={{ width: "120px", textAlign: "center" }}>Amount</th>
+                <th style={{ width: "120px", textAlign: "center" }}>Date</th>
                 <th style={{ width: "150px", textAlign: "center" }}>Status</th>
                 <th style={{ width: "70px", textAlign: "center" }}>Action</th>
               </tr>
@@ -182,8 +200,8 @@ const Profile = () => {
                 <tr key={order.id}>
                   <td style={{ textAlign: "center" }}>{index + 1}</td>
                   <td style={{ textAlign: "center" }}>{order.id}</td>
-                  <td style={{ textAlign: "center" }}>{order.date}</td>
                   <td style={{ textAlign: "center" }}>{order.amount}</td>
+                  <td style={{ textAlign: "center" }}>{order.date}</td>
                   <td style={{ textAlign: "center" }}>{order.status}</td>
                   <td style={{ textAlign: "center" }}>
                     <Checkbox
@@ -204,6 +222,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
+
   );
 };
 

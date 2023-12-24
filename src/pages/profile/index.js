@@ -12,29 +12,49 @@ const Profile = () => {
   const router = useRouter();
   const [selectedButton, setSelectedButton] = useState("myProfile");
   const { logout, checkIsLogin } = useUserContext();
-  const handleButtonClick = (button) => {
-    getOrderHistory(sessionStorage.getItem("user")).then(data => {
-      console.log(data.orders);
+  const handleButtonClick = (button, id) => {
+    console.log("ID: ", id);
 
+    getOrderHistory(sessionStorage.getItem("user")).then(data => {
+      let newOrdersDetail;
       // Print all order
+
       data.orders.forEach(order => {
-        console.log(order);
+        if (order.id === id) {
+          console.log("Test Order:", order);
+
+          newOrdersDetail = order.order_details.map(ordersDetail => ({
+            id: ordersDetail.id,
+            product_name: ordersDetail.product.name,
+            category: ordersDetail.product.category.name,
+            amount: ordersDetail.count,
+            total: order.ship_fee + ordersDetail.product.price * ordersDetail.count,
+            status: "Pendding"
+          }));
+
+          console.log("Test Order:", newOrdersDetail);
+        }
+
       });
 
       const newOrders = data.orders.map(order => ({
         id: order.id,
         date: order.time.split("T")[0],
-        amount: 1, // Giữ nguyên giá trị 1 nếu bạn muốn hoặc cập nhật theo đơn hàng nếu có thông tin
-        status: "Pendding" // Giữ nguyên trạng thái "Shipped" nếu bạn muốn hoặc cập nhật theo đơn hàng nếu có thông tin
+        price: order.price,
+        ship_fee: order.ship_fee,
+        status: "Pendding"
       }));
 
       // console.log("newOrders: ");
       // console.log(newOrders);
       setOrders(newOrders);
+      setOrdersDetails(newOrdersDetail);
     }).catch(error => {
       console.error("Error occurred:", error);
     });
+
     setSelectedButton(button);
+
 
   };
 
@@ -47,8 +67,10 @@ const Profile = () => {
   };
   const [selectedItems, setSelectedItems] = useState([]);
   const [orders, setOrders] = useState([
- 
+    // Add more orders as needed
+  ]);
 
+  const [ordersDetails, setOrdersDetails] = useState([
     // Add more orders as needed
   ]);
 
@@ -169,6 +191,7 @@ const Profile = () => {
         </div>
       </div>
 
+
       {/* OrderHistory */}
       <div
         className={`p-10 border border-gray-400 rounded-xl gap-7 flex flex-col ${selectedButton === "orderHistory" ? "" : "hidden"
@@ -188,21 +211,28 @@ const Profile = () => {
             <thead>
               <tr>
                 <th style={{ width: "50px", textAlign: "center" }}>STT</th>
-                <th style={{ width: "50px", textAlign: "center" }}>ID</th>
-                <th style={{ width: "120px", textAlign: "center" }}>Amount</th>
                 <th style={{ width: "120px", textAlign: "center" }}>Date</th>
+                <th style={{ width: "100px", textAlign: "center" }}>Price</th>
+                <th style={{ width: "100px", textAlign: "center" }}>Shipping Fee</th>
                 <th style={{ width: "150px", textAlign: "center" }}>Status</th>
+
+                <th style={{ width: "80px", textAlign: "center" }}></th>
+
                 <th style={{ width: "70px", textAlign: "center" }}>Action</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((order, index) => (
+
                 <tr key={order.id}>
                   <td style={{ textAlign: "center" }}>{index + 1}</td>
-                  <td style={{ textAlign: "center" }}>{order.id}</td>
-                  <td style={{ textAlign: "center" }}>{order.amount}</td>
                   <td style={{ textAlign: "center" }}>{order.date}</td>
+                  <td style={{ textAlign: "center" }}>{order.price}</td>
+                  <td style={{ textAlign: "center" }}>{order.ship_fee}</td>
                   <td style={{ textAlign: "center" }}>{order.status}</td>
+
+                  <td style={{ textAlign: "left", cursor: "pointer", fontWeight: 700 }} onClick={() => handleButtonClick("orderHistoryDetail", order.id)}>Detail</td>
+
                   <td style={{ textAlign: "center" }}>
                     <Checkbox
                       onChange={() => handleCheckboxChange(order.id)}
@@ -221,6 +251,63 @@ const Profile = () => {
           Delete Selected
         </div>
       </div>
+
+
+      {/* Order History Detail */}
+      <div
+        className={`p-10 border border-gray-400 rounded-xl gap-7 flex flex-col ${selectedButton === "orderHistoryDetail" ? "" : "hidden"
+          }`}
+        id="orderHistoryContentDetail"
+      >
+        <div className="font-bold">Order history detail</div>
+
+        <div className="flex justify-center gap-5">
+          <Button variant="outlined">All</Button>
+          <Button variant="outlined">Today</Button>
+          <Button variant="outlined">This Week</Button>
+          <Button variant="outlined">This Month</Button>
+        </div>
+        <div className="table-container">
+          <table className="min-w-full border border-gray-300">
+            <thead>
+              <tr>
+                <th style={{ width: "50px", textAlign: "center" }}>STT</th>
+                <th style={{ width: "120px", textAlign: "center" }}>Product Name</th>
+                <th style={{ width: "150px", textAlign: "center" }}>Category</th>
+                <th style={{ width: "100px", textAlign: "center" }}>Amount</th>
+                <th style={{ width: "100px", textAlign: "center" }}>Total</th>
+                <th style={{ width: "80px", textAlign: "center" }}>Status</th>
+                <th style={{ width: "70px", textAlign: "center" }}>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ordersDetails?.map((ordersDetail, index) => (
+                <tr key={ordersDetail.id}>
+                  <td style={{ textAlign: "center" }}>{index + 1}</td>
+                  <td style={{ textAlign: "center" }}>{ordersDetail.product_name}</td>
+                  <td style={{ textAlign: "center" }}>{ordersDetail.category}</td>
+                  <td style={{ textAlign: "center" }}>{ordersDetail.amount}</td>
+                  <td style={{ textAlign: "center" }}>{ordersDetail.total}</td>
+                  <td style={{ textAlign: "center" }}>{ordersDetail.status}</td>
+                  <td style={{ textAlign: "center" }}>
+                    <Checkbox
+                      onChange={() => handleCheckboxChange(ordersDetail.id)}
+                      checked={selectedItems.includes(ordersDetail.id)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div
+          className="self-end px-10 cursor-pointer py-3 bg-[#f02d34] rounded-3xl text-white"
+          onClick={handleDeleteSelectedItems}
+        >
+          Delete Selected
+        </div>
+      </div>
+
     </div>
 
   );

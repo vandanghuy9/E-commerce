@@ -105,17 +105,22 @@ export const getOrderHistory = async (id) => {
 };
 
 export const placeOrderRequest = (data, handler) => {
-  console.log(JSON.stringify(data));
-  handler("success");
-  // fetch(`http://localhost:8000/api/order/user/${data.user}`, {
-  //   method: "POST",
-  //   body: JSON.stringify(data),
-  //   headers: {
-  //     "Content-type": "application/json",
-  //   },
-  // })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     handler(data);
-  //   });
+  console.log(
+    JSON.stringify({
+      orders: [data],
+    })
+  );
+  fetch(`http://localhost:8000/api/order/user/${data.user}`, {
+    method: "POST",
+    body: JSON.stringify({
+      orders: [data],
+    }),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      handler(data);
+    });
 };

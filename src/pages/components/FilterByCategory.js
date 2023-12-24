@@ -1,4 +1,4 @@
-import { List, ListItemButton, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 
 function FilterByCategory({ data = [], ...other }) {
   return (
@@ -6,13 +6,19 @@ function FilterByCategory({ data = [], ...other }) {
       sx={{ width: "18%", marginRight: "20px", height: "100%", gap: "12px" }}
     >
       {data.map((item) => (
-        <ListItemButton sx={{ borderRadius: "100px" }} key={item.id}>
-          <ListItemText
-            sx={{ fontSize: "18px", fontWeight: "500" }}
-            disableTypography
-            primary={item.title}
-          />
-        </ListItemButton>
+        <ListItem>
+          <ListItemButton
+            sx={{ borderRadius: "100px" }}
+            key={item.id}
+            onClick={() => console.log(item.title)}
+          >
+            <ListItemText
+              sx={{ fontSize: "18px", fontWeight: "500" }}
+              disableTypography
+              primary={item.title}
+            />
+          </ListItemButton>
+        </ListItem>
       ))}
     </List>
   );

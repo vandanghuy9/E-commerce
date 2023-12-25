@@ -24,15 +24,31 @@ const Addaddress = () => {
       streetAddress,
     });
   };
+
+  const inputStyle = {
+    width: "300px",
+    margin: "8px",
+    padding: "10px 15px",
+    fontSize: "18px",
+  };
+
+  const placeholderStyle = {
+    fontSize: "20px",
+  };
+
   return (
     <div className="pt-12 mb-[100px]">
       <form onSubmit={handleSubmit}>
-        <div className="flex w-[1200px] mx-auto">
+        <div className="flex w-[1200px] mx-auto" style={{ justifyContent: "center" }}>
           <div className="md:flex bg-gray-100 shadow-lg rounded-lg">
-            <div>
+            <div style={{
+                  padding: "0px 20px"
+                }}>
               <h2
                 style={{
                   fontSize: "30px",
+                  paddingLeft: "10px",
+                  margin: "20px 0px",
                 }}
                 className="text-red-500 font-medium px-[20px]"
               >
@@ -45,24 +61,14 @@ const Addaddress = () => {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Full Name"
-                  style={{
-                    width: "300px",
-                    margin: "8px",
-                    padding: "10px",
-                    fontSize: "30px",
-                  }}
+                  style={{ ...inputStyle}}
                 />
                 <input
                   type="tel"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder="Phone Number"
-                  style={{
-                    width: "300px",
-                    margin: "8px",
-                    padding: "10px",
-                    fontSize: "30px",
-                  }}
+                  style={{ ...inputStyle}}
                 />
               </div>
 
@@ -72,24 +78,14 @@ const Addaddress = () => {
                   value={province}
                   onChange={(e) => setProvince(e.target.value)}
                   placeholder="Province/City"
-                  style={{
-                    width: "300px",
-                    margin: "8px",
-                    padding: "10px",
-                    fontSize: "30px",
-                  }}
+                  style={{ ...inputStyle}}
                 />
                 <input
                   type="text"
                   value={district}
                   onChange={(e) => setDistrict(e.target.value)}
                   placeholder="District"
-                  style={{
-                    width: "300px",
-                    margin: "8px",
-                    padding: "10px",
-                    fontSize: "30px",
-                  }}
+                  style={{ ...inputStyle}}
                 />
               </div>
 
@@ -102,8 +98,8 @@ const Addaddress = () => {
                   style={{
                     width: "620px",
                     margin: "8px",
-                    padding: "10px",
-                    fontSize: "30px",
+                    padding: "10px 15px",
+                    fontSize: "18px",
                   }}
                 />
               </div>

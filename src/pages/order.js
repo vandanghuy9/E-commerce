@@ -12,7 +12,7 @@ const Order = () => {
     router.push("/addaddress");
   };
   const { cartItems, totalPrice, setPaymentMethod } = useStateContext();
-  const shippingFee = totalPrice / 2;
+  const shippingFee = totalPrice > 20 ? 0 : totalPrice / 2;
   const paymentOptions = [
     "Choose your payment method",
     "payment after shipping",
@@ -83,9 +83,14 @@ const Order = () => {
                           <span className="mr-1 text-lg font-medium text-gray-400">
                             Shipping fee: $
                           </span>
-                          <span className="text-lg font-bold text-gray-800">
-                            {shippingFee}
-                          </span>
+                          <div className="flex items-center justify-center">
+                            <span className="text-base text-gray-800 font-old">
+                              {shippingFee}
+                            </span>
+                            <span className="pl-3 text-lg italic text-red-500 font-l">
+                              (If orders over $20 will receive free shipping)
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>

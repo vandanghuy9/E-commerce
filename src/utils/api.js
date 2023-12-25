@@ -124,3 +124,25 @@ export const placeOrderRequest = (data, handler) => {
       handler(data);
     });
 };
+
+export const getUserById = (data, handler) => {
+  fetch(`http://localhost:8000/api/user/${data}`)
+    .then((response) => response.json())
+    .then((data) => {
+      handler(data.user);
+    });
+};
+
+export const updateUserById = (data, handler) => {
+  fetch(`http://localhost:8000/api/user/${data.id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      handler(data);
+    });
+};

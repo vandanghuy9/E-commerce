@@ -146,3 +146,17 @@ export const updateUserById = (data, handler) => {
       handler(data);
     });
 };
+
+export const commentProduct = (data, handler) => {
+  fetch(`http://localhost:8000/api/review/product/${data.product_id}`, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      handler(data);
+    });
+};

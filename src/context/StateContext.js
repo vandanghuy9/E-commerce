@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useUserContext } from "./UserContext";
-import { placeOrderRequest } from "@/utils/api";
+import { commentProduct, placeOrderRequest } from "@/utils/api";
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
@@ -117,6 +117,13 @@ export const StateContext = ({ children }) => {
       }
     );
   };
+
+  const commentForProduct = (data) => {
+    commentProduct(data, (res) => {
+      toast.success(res?.success);
+      router.back();
+    });
+  };
   return (
     <Context.Provider
       value={{
@@ -133,6 +140,7 @@ export const StateContext = ({ children }) => {
         deteleFromCartItems,
         placeOrder,
         setPaymentMethod,
+        commentForProduct,
       }}
     >
       {children}

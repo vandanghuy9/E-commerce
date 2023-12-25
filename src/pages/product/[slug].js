@@ -9,6 +9,7 @@ import "react-tabs/style/react-tabs.css";
 import { getAllProducts, getProductById } from "@/utils/api";
 import ProductReview from "../components/ProductReview";
 import Loading from "../components/Loading";
+import Link from "next/link";
 const ProductDetail = ({ product, relatedProducts }) => {
   const router = useRouter();
   const [index, setIndex] = useState(0);
@@ -122,29 +123,50 @@ const ProductDetail = ({ product, relatedProducts }) => {
             ))}
           </TabList>
           <TabPanel>
-            <h2>Description</h2>
+            <h2>{product.content}</h2>
           </TabPanel>
           <TabPanel>
-            <h2>Information</h2>
+            <h2 className="font-mono text-xl antialiased font-bold	">
+              {product.name}
+            </h2>
+            <p>
+              <span className="font-medium">Description</span> :{" "}
+              {product.content}
+            </p>
+            <p>
+              <span className="font-medium">Category</span>:{" "}
+              {product?.category.name}
+            </p>
           </TabPanel>
           <TabPanel>
             <div>
               <div className="product-detail-desc review-container">
-                <div className="summary">
+                <div className="summary ">
                   <h3 className="price inline-block">Product Ratings</h3>
+                  <Link
+                    href={`/comment?product_id=${product.id}`}
+                    className="mx-3 px-3 py-2 rounded-full bg-red-500 text-white font-medium hover:bg-red-600  "
+                  >
+                    Comment
+                  </Link>
                 </div>
                 <div className="product-rating-list w-full md:max-w-7xl">
                   <div className="product-comment-list">
                     <div className="w-full px-3 py-2 items-start">
                       {product.reviews.length > 0 &&
-                        product.reviews.map(({ id, content, rating }) => (
-                          <ProductReview
-                            key={id}
-                            content={content}
-                            rating={rating}
-                            username={"hello"}
-                          />
-                        ))}
+                        product.reviews.map(
+                          ({ id, content, rating, user_email }) => (
+                            <ProductReview
+                              key={id}
+                              content={content}
+                              rating={rating}
+                              username={user_email.substr(
+                                0,
+                                user_email.indexOf("@")
+                              )}
+                            />
+                          )
+                        )}
                       {product.reviews.length == 0 && (
                         <div className="border-b border-black text-xl font-medium py-5 flex justify-center mx-auto">
                           No comment

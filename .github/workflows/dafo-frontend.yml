@@ -2,7 +2,8 @@ name: DAFO Frontend NextJS
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
     branches: [ "main" ]
 
@@ -11,6 +12,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'
     steps:
       -
         name: Checkout

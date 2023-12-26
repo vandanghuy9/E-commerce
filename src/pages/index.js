@@ -1,7 +1,7 @@
 import { Stack, styled } from "@mui/material";
 import React, { useState } from "react";
 import { banner } from "../data/data";
-import { Product, FooterBanner, HeroBanner } from "./components";
+import { Product, FooterBanner, HeroBanner } from "../components/components";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 const StyledStack = styled(Stack)(() => ({
   display: "flex",

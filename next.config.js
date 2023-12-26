@@ -4,6 +4,6 @@ const nextConfig = {
   images: {
     domains: ["www.southernliving.com"], // Add the hostname here
   },
-  pageExtensions: ["page.tsx", "page.ts", "page.jsx", "page.js"],
+  pageExtensions: ["mdx", "md", "jsx", "js", "tsx", "ts"],
 };
 module.exports = nextConfig;

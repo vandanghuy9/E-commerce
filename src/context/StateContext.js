@@ -3,23 +3,28 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useUserContext } from "./UserContext";
 import { commentProduct, placeOrderRequest } from "@/utils/api";
+import { set } from "react-hook-form";
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
   const { checkIsLogin } = useUserContext();
   const router = useRouter();
+  const [searchValue, setSearchValue] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0); // Tong so tien
   const [totalQuantities, setTotalQuantities] = useState(0); // So mon hang trong cart
   const [qty, setQty] = useState(1);
+
   const increaseQuantity = () => {
     setQty((prevQty) => prevQty + 1);
   };
+
   const decreaseQuantity = () => {
     setQty((prevqty) => (prevqty === 0 ? 0 : prevqty - 1));
   };
+
   const addToCart = (product, quantity) => {
     if (checkIsLogin() === false) {
       router.push("/signin");
@@ -49,6 +54,7 @@ export const StateContext = ({ children }) => {
       return 1;
     }
   };
+
   const toggleCartItem = (_id, value) => {
     let foundProduct = cartItems.find((item) => item.id === _id);
     let index = cartItems.findIndex((item) => item.id === _id);
@@ -69,6 +75,7 @@ export const StateContext = ({ children }) => {
       }
     }
   };
+
   const deteleFromCartItems = (_id) => {
     const deletedItems = cartItems.find((item) => item.id == _id);
     const decreasedPrice = deletedItems.price * deletedItems.quantity;
@@ -81,6 +88,8 @@ export const StateContext = ({ children }) => {
       (prevTotalQuantities) => prevTotalQuantities - decreasedQuantities
     );
   };
+
+  const getSearchValue = (value) => setSearchValue(value);
 
   const placeOrder = ({
     fullName,
@@ -129,6 +138,7 @@ export const StateContext = ({ children }) => {
         totalPrice,
         totalQuantities,
         qty,
+        searchValue,
         increaseQuantity,
         decreaseQuantity,
         toggleCartItem,
@@ -136,6 +146,7 @@ export const StateContext = ({ children }) => {
         setShowCart,
         deteleFromCartItems,
         placeOrder,
+        getSearchValue,
         setPaymentMethod,
         commentForProduct,
       }}

@@ -4,7 +4,7 @@ import "@/styles/globals.css";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import { Layout } from "./components";
+import { Layout } from "../components/components";
 import UserContext from "@/context/UserContext";
 import Script from "next/script";
 export default function App({ Component, pageProps }) {

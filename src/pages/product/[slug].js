@@ -2,13 +2,13 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { Product } from "../components";
+import { Product } from "../../components/components";
 import { useStateContext } from "@/context/StateContext";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { getAllProducts, getProductById } from "@/utils/api";
-import ProductReview from "../components/ProductReview";
-import Loading from "../components/Loading";
+import ProductReview from "../../components/components/ProductReview";
+import Loading from "../../components/components/Loading";
 import Link from "next/link";
 const ProductDetail = ({ product, relatedProducts }) => {
   const router = useRouter();

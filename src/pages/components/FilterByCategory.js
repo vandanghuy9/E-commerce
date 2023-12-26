@@ -6,7 +6,7 @@ function FilterByCategory({ data = [], ...other }) {
       sx={{ width: "18%", marginRight: "20px", height: "100%", gap: "12px" }}
     >
       {data.map((item, index) => (
-        <ListItem key={indec}>
+        <ListItem key={index}>
           <ListItemButton
             sx={{ borderRadius: "100px" }}
             key={item.id}

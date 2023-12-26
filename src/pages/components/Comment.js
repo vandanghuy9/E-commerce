@@ -21,13 +21,13 @@ const YourComponent = ({ product, billId }) => {
 
   return (
     <div>
-      <h1 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        Comment for "{product.name}"
+      <h1 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+        Comment for {product.name}
       </h1>
       <form onSubmit={handleSubmit} className="w-full max-w-sm mx-auto">
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="comment"
           >
             Comment
@@ -37,12 +37,12 @@ const YourComponent = ({ product, billId }) => {
             rows="4"
             cols="50"
             placeholder="Enter your comment"
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
           ></textarea>
         </div>
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="point"
           >
             Rating (0-10)
@@ -53,12 +53,12 @@ const YourComponent = ({ product, billId }) => {
             id="point"
             min="0"
             max="10"
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
         >
           Submit Comment
         </button>

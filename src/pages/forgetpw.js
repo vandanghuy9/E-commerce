@@ -32,7 +32,7 @@ const ForgotPassword = () => {
           <FontAwesomeIcon icon={faLock} style={{ fontSize: "5.5em" }} />
           <h1 className={styles.forgotPasswordText}>Forgot password?</h1>
           <p className={styles.smallText}>
-            Enter your email and we'll send you <br />a link to reset your
+            Enter your email and we will send you <br />a link to reset your
             password
           </p>{" "}
           <br />

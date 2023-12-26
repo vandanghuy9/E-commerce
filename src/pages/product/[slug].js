@@ -51,6 +51,7 @@ const ProductDetail = ({ product, relatedProducts }) => {
           <div className="small-images-container">
             {product.images.map((item, i) => (
               <img
+                key={i}
                 src={item?.link}
                 className={
                   i === index ? "small-image selected-image" : "small-image"
@@ -118,7 +119,7 @@ const ProductDetail = ({ product, relatedProducts }) => {
           <TabList>
             {["Description", "Information", "Reviews"].map((item, i) => (
               <Tab key={i}>
-                <div className=" px-10 font-mono">{item}</div>
+                <div className="px-10 font-mono ">{item}</div>
               </Tab>
             ))}
           </TabList>
@@ -126,7 +127,7 @@ const ProductDetail = ({ product, relatedProducts }) => {
             <h2>{product.content}</h2>
           </TabPanel>
           <TabPanel>
-            <h2 className="font-mono text-xl antialiased font-bold	">
+            <h2 className="font-mono text-xl antialiased font-bold ">
               {product.name}
             </h2>
             <p>
@@ -142,17 +143,17 @@ const ProductDetail = ({ product, relatedProducts }) => {
             <div>
               <div className="product-detail-desc review-container">
                 <div className="summary ">
-                  <h3 className="price inline-block">Product Ratings</h3>
+                  <h3 className="inline-block price">Product Ratings</h3>
                   <Link
                     href={`/comment?product_id=${product.id}`}
-                    className="mx-3 px-3 py-2 rounded-full bg-red-500 text-white font-medium hover:bg-red-600  "
+                    className="px-3 py-2 mx-3 font-medium text-white bg-red-500 rounded-full hover:bg-red-600 "
                   >
                     Comment
                   </Link>
                 </div>
-                <div className="product-rating-list w-full md:max-w-7xl">
+                <div className="w-full product-rating-list md:max-w-7xl">
                   <div className="product-comment-list">
-                    <div className="w-full px-3 py-2 items-start">
+                    <div className="items-start w-full px-3 py-2">
                       {product.reviews.length > 0 &&
                         product.reviews.map(
                           ({ id, content, rating, user_email }) => (
@@ -168,7 +169,7 @@ const ProductDetail = ({ product, relatedProducts }) => {
                           )
                         )}
                       {product.reviews.length == 0 && (
-                        <div className="border-b border-black text-xl font-medium py-5 flex justify-center mx-auto">
+                        <div className="flex justify-center py-5 mx-auto text-xl font-medium border-b border-black">
                           No comment
                         </div>
                       )}

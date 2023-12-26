@@ -1,22 +1,15 @@
 import Image from "next/image";
 import React from "react";
-import {
-  IoSettingsOutline,
-  IoPersonOutline,
-  IoNotificationsOutline,
-  IoSearch,
-  IoCartOutline,
-} from "react-icons/io5";
+import { IoSearch } from "react-icons/io5";
 import { useRouter } from "next/router";
 import { useStateContext } from "@/context/StateContext";
-import Cart from "./Cart";
-import { Autocomplete, TextField, Button } from "@mui/material";
-import InputAdornment from "@mui/material/InputAdornment";
+import { Autocomplete, TextField } from "@mui/material";
+
 import Link from "next/link";
 import { useUserContext } from "@/context/UserContext";
 import UserNavBar from "./UserNavbar";
 const NavBar = () => {
-  const { showCart, setShowCart, totalQuantities } = useStateContext();
+  const { getSearchValue } = useStateContext();
   const router = useRouter();
   const [searchValue, setSearchValue] = React.useState("");
   const { checkIsLogin } = useUserContext();
@@ -29,13 +22,7 @@ const NavBar = () => {
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     if (searchValue.trim() !== "") {
-      const params = new URLSearchParams();
-      params.append("name", searchValue);
-      const queryString = params.toString();
-      router.push({
-        pathname: "/",
-        search: `?${queryString}`,
-      });
+      getSearchValue(searchValue);
     }
   };
 

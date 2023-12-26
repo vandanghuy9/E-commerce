@@ -1,4 +1,5 @@
 import { Stack, styled } from "@mui/material";
+var BASE_URL = process.env.BASE_URL;
 import React, { useState } from "react";
 import { banner } from "../data/data";
 import { Product, FooterBanner, HeroBanner } from "../components/components";
@@ -97,7 +98,7 @@ export default Home;
 export async function getServerSideProps({ query }) {
   const name = query.name;
   try {
-    let url = "http://127.0.0.1:8000/api/product/";
+    let url = `${BASE_URL}/product/`;
     if (name) {
       url += `?name=${encodeURIComponent(name)}`;
     }

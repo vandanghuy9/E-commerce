@@ -46,6 +46,7 @@ const ProductDetail = ({ product, relatedProducts }) => {
               src={product.images[index]?.link}
               alt={product.id}
               className="product-detail-image"
+              style={{ width: "1800px" }}
             />
           </div>
           <div className="small-images-container">

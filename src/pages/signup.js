@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
 const initialData = {
-  username: "",
   email: "",
   password: "",
 };
@@ -69,7 +68,8 @@ const SignUp = () => {
       }
     });
     if (validates.current === true) {
-      handleSignup(data.email, data.password, data.username);
+      console.log(data);
+      handleSignup(data.email, data.password);
     }
   };
   return (
@@ -95,19 +95,6 @@ const SignUp = () => {
           <p className={`${styles.text_secondary} ${styles.mb_2}`}>
             or use your emails for register
           </p>
-          <div className={styles.mb_2}>
-            <input
-              className={`${styles.fullwidth} ${styles.input_style}`}
-              type="text"
-              name="username"
-              defaultValue={data.username}
-              placeholder="Username"
-              onChange={handleChange}
-            />
-            {error.username && (
-              <small className={styles.text_error}>{error.username}</small>
-            )}
-          </div>
           <div className={styles.mb_2}>
             <input
               className={`${styles.fullwidth} ${styles.input_style}`}

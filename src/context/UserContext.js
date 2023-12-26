@@ -22,7 +22,7 @@ const UserContext = ({ children }) => {
       await sessionStorage.setItem("user", user.user._id);
       await setIsLogin(true);
       await toast.success("welcome" + user.user._id);
-      await router.back();
+      await router.push("/");
     } catch (e) {
       toast.error("Wrong account. Try again");
     }
@@ -30,13 +30,13 @@ const UserContext = ({ children }) => {
   const checkIsLogin = () => {
     return isLogin;
   };
-  const handleSignup = async (email, password, username) => {
+  const handleSignup = async (email, password) => {
     try {
       const newUser = await signup(email, password);
       await sessionStorage.setItem("user", newUser?.userID);
       await setIsLogin(true);
       await toast.success("welcome " + newUser?.userID);
-      await router.back();
+      await router.push("/");
     } catch (e) {
       toast.error("Error. Try again");
     }

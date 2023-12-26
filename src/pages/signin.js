@@ -29,7 +29,6 @@ const SignIn = () => {
   } = methods;
 
   const onSubmit = (data) => {
-    console.log(data); // Handle form submission here
     handleLogin(data);
   };
 

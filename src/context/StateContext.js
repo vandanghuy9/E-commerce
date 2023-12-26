@@ -46,14 +46,12 @@ export const StateContext = ({ children }) => {
       }
       toast.success(`${qty} ${product.name} added to the cart`);
       setQty(1);
-      console.log(cartItems);
       return 1;
     }
   };
   const toggleCartItem = (_id, value) => {
     let foundProduct = cartItems.find((item) => item.id === _id);
     let index = cartItems.findIndex((item) => item.id === _id);
-    // console.log(foundProduct);
 
     if (value === "inc") {
       foundProduct.quantity += 1;
@@ -111,7 +109,6 @@ export const StateContext = ({ children }) => {
         ],
       },
       (res) => {
-        console.log(res);
         toast.success("Order successfully");
         router.push("/profile");
       }

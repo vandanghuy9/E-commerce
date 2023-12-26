@@ -59,10 +59,9 @@ const Home = ({ products }) => {
           }}
         >
           {data.map((item) => (
-            <ListItem>
+            <ListItem key={item.id}>
               <ListItemButton
                 sx={{ borderRadius: "100px" }}
-                key={item.id}
                 onClick={() => handleChange(item.title)}
               >
                 <ListItemText

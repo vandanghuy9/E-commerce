@@ -34,7 +34,7 @@ export const getProductById = async (id) => {
 };
 
 export const login = async ({ email, password }) => {
-  const response = await fetch(`http://localhost:8000/api/login/`, {
+  const response = await fetch(`http://127.0.0.1:8000/api/login/`, {
     method: "POST",
     body: JSON.stringify({
       email: email,
@@ -53,7 +53,7 @@ export const login = async ({ email, password }) => {
 };
 
 export const signup = async (email, password) => {
-  const response = await fetch(`http://localhost:8000/api/register/`, {
+  const response = await fetch(`http://127.0.0.1:8000/api/register/`, {
     method: "POST",
     body: JSON.stringify({
       email,
@@ -77,7 +77,7 @@ export const resetPassword = async (
   confirmPassword,
   handler
 ) => {
-  fetch(`http://localhost:8000/api/reset_password/`, {
+  fetch(`http://127.0.0.1:8000/api/reset_password/`, {
     method: "POST",
     body: JSON.stringify({
       email: email,
@@ -95,7 +95,7 @@ export const resetPassword = async (
 };
 
 export const getOrderHistory = async (id) => {
-  const response = await fetch(`http://localhost:8000/api/order/user/${id}`);
+  const response = await fetch(`http://127.0.0.1:8000/api/order/user/${id}`);
   if (!response.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
@@ -110,7 +110,7 @@ export const placeOrderRequest = (data, handler) => {
       orders: [data],
     })
   );
-  fetch(`http://localhost:8000/api/order/user/${data.user}`, {
+  fetch(`http://127.0.0.1:8000/api/order/user/${data.user}`, {
     method: "POST",
     body: JSON.stringify({
       orders: [data],
@@ -126,7 +126,7 @@ export const placeOrderRequest = (data, handler) => {
 };
 
 export const getUserById = (data, handler) => {
-  fetch(`http://localhost:8000/api/user/${data}`)
+  fetch(`http://127.0.0.1:8000/api/user/${data}`)
     .then((response) => response.json())
     .then((data) => {
       handler(data.user);
@@ -134,7 +134,7 @@ export const getUserById = (data, handler) => {
 };
 
 export const updateUserById = (data, handler) => {
-  fetch(`http://localhost:8000/api/user/${data.id}`, {
+  fetch(`http://127.0.0.1:8000/api/user/${data.id}`, {
     method: "PUT",
     body: JSON.stringify(data),
     headers: {
@@ -148,7 +148,7 @@ export const updateUserById = (data, handler) => {
 };
 
 export const commentProduct = (data, handler) => {
-  fetch(`http://localhost:8000/api/review/product/${data.product_id}`, {
+  fetch(`http://127.0.0.1:8000/api/review/product/${data.product_id}`, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {

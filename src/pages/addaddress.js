@@ -10,7 +10,8 @@ const Addaddress = () => {
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
-  const { cartItems, totalPrice, placeOrder } = useStateContext();
+  const { cartItems, totalPrice, placeOrder, paymentMethod } =
+    useStateContext();
   const shippingFee = totalPrice / 2;
   const paymentOptions = ["payment after shipping", "online payment"];
   const handleSubmit = (e) => {
@@ -145,15 +146,7 @@ const Addaddress = () => {
                     </div>
                     <h2 className="text-xl font-medium mb-3">Payment method</h2>
                   </div>
-                  <div className="col-span-2">
-                    <select name="payment_method" id="payment_method">
-                      {paymentOptions.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                  <div className="col-span-2">{paymentMethod}</div>
                   <div className="py-5">
                     <button type="submit" className="btn">
                       Place Order

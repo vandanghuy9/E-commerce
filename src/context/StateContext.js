@@ -119,6 +119,9 @@ export const StateContext = ({ children }) => {
       },
       (res) => {
         toast.success("Order successfully");
+        setCartItems([]);
+        setTotalQuantities(0);
+        setTotalPrice(0);
         router.push("/profile");
       }
     );
@@ -139,6 +142,7 @@ export const StateContext = ({ children }) => {
         totalQuantities,
         qty,
         searchValue,
+        paymentMethod,
         increaseQuantity,
         decreaseQuantity,
         toggleCartItem,

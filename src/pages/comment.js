@@ -1,11 +1,15 @@
 var BASE_URL = process.env.BASE_URL;
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { useUserContext } from "@/context/UserContext";
 import { useStateContext } from "@/context/StateContext";
+import { useRouter } from "next/router";
+
 const Review = ({ product }) => {
+  const router = useRouter();
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
   const { commentForProduct } = useStateContext();
+  const { checkLogin } = useUserContext();
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(comment, rating, sessionStorage.getItem("user"));
@@ -16,7 +20,11 @@ const Review = ({ product }) => {
       user: sessionStorage.getItem("user"),
     });
   };
-
+  useEffect(() => {
+    if (checkLogin() === false) {
+      router.push("/signin");
+    }
+  }, []);
   return (
     <div>
       <h1 className="my-3 text-xl font-semibold leading-tight text-center text-gray-800 dark:text-gray-200">

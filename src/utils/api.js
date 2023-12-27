@@ -107,25 +107,19 @@ export const getOrderHistory = async (id) => {
 };
 
 export const placeOrderRequest = (data, handler) => {
-  console.log(
-    JSON.stringify({
+  fetch(`http://185.193.66.107:8000/api/order/user/${data.user}`, {
+    method: "POST",
+    body: JSON.stringify({
       orders: [data],
-    })
-  );
-  handler(data);
-  // fetch(`http://185.193.66.107:8000/api/order/user/${data.user}`, {
-  //   method: "POST",
-  //   body: JSON.stringify({
-  //     orders: [data],
-  //   }),
-  //   headers: {
-  //     "Content-type": "application/json",
-  //   },
-  // })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     handler(data);
-  //   });
+    }),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      handler(data);
+    });
 };
 
 export const getUserById = (data, handler) => {

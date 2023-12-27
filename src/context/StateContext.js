@@ -101,8 +101,8 @@ export const StateContext = ({ children }) => {
     placeOrderRequest(
       {
         price: totalPrice,
-        ship_fee: totalPrice / 2,
-        user: sessionStorage.getItem("user"),
+        ship_fee: totalPrice > 20 ? 0 : totalPrice / 2,
+        user: parseInt(sessionStorage.getItem("user")),
         order_details: cartItems.map((item) => ({
           product: item.id,
           count: item.quantity,
